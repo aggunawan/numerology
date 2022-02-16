@@ -184,12 +184,12 @@ class UserEditScreen extends Screen
             $userData['password'] = Hash::make($userData['password']);
         }
 
-        $user
-            ->fill($userData)
-            ->fill([
-                'permissions' => $permissions,
-            ])
-            ->save();
+        $user->fill($userData)
+            ->fill(['permissions' => $permissions]);
+
+        /** @noinspection PhpUndefinedFieldInspection */
+        $user->birth_date = $userData['birth_date'];
+        $user->save();
 
         $user->replaceRoles($request->input('user.roles'));
 
