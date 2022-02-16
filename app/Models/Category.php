@@ -15,6 +15,10 @@ class Category extends Model implements NumerologyCategory
         'year_formula',
     ];
 
+    protected $attributes = [
+        'year_formula' => 0
+    ];
+
     public function getYearFormula(): string
     {
         return $this->attributes['year_formula'];
