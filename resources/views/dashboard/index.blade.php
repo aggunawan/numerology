@@ -7,7 +7,7 @@
                 </h2>
             </div>
             <div class="w-full flex flex-row-reverse hidden md:flex">
-                <form>
+                <form action="{{ route('dashboard.index') }}" method="GET">
                     <div class="max-w-sm grid grid-cols-3 gap-4">
                         <div class="col-span-2">
                             <input
