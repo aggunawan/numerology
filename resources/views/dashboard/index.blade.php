@@ -110,7 +110,80 @@
                 </div>
             </div>
             <div class="flex flex-col xl:flex-row justify-center md:pt-4 px-4 gap-4" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-                <p class="text-sm text-gray-500 dark:text-gray-400">Current Year</p>
+                <div class="p-4 w-full sm:max-w-md md:max-w-full mx-auto bg-white rounded-lg border shadow-md">
+                    <div class="flex flex-col">
+                        <div class="inline-block py-2 min-w-full">
+                            <div class="overflow-hidden shadow-md sm:rounded-lg">
+                                <table class="min-w-full">
+                                    <thead class="bg-gray-200 border-gray-200 font-bold">
+                                    <tr>
+                                        <th scope="col" class="py-3 px-6 text-sm font-bold tracking-wider text-left text-gray-700 uppercase text-center">
+                                            Year
+                                        </th>
+                                        @foreach(range(1, 31) as $date)
+                                            <th scope="col" class="p-1 text-sm font-bold tracking-wider text-left text-gray-700 uppercase">
+                                                {{ $date }}
+                                            </th>
+                                        @endforeach
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="border-b odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 dark:border-gray-600">
+                                        <td class="text-sm font-medium text-gray-900 whitespace-nowrap text-center">
+                                            January
+                                        </td>
+                                        <td
+                                            colspan="10"
+                                            class="text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            @include('numerology.category.trait', ['trait' => $year_numerology->getDayMaster()->getTraits()[$year_numerology->getDayMaster()->getTraitCodes()[0]]])
+                                        </td>
+                                        <td
+                                            colspan="5"
+                                            class="text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            @include('numerology.category.trait', ['trait' => $year_numerology->getDayMaster()->getTraits()[$year_numerology->getDayMaster()->getTraitCodes()[1]]])
+                                        </td>
+                                        <td
+                                            colspan="8"
+                                            class="text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            @include('numerology.category.trait', ['trait' => $year_numerology->getCulture()->getTraits()[$year_numerology->getCulture()->getTraitCodes()[0]]])
+                                        </td>
+                                        <td
+                                            colspan="8"
+                                            class="text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            @include('numerology.category.trait', ['trait' => $year_numerology->getCulture()->getTraits()[$year_numerology->getCulture()->getTraitCodes()[1]]])
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 dark:border-gray-600">
+                                        <td class="text-sm font-medium text-gray-900 whitespace-nowrap text-center">
+                                            February
+                                        </td>
+                                        <td
+                                            colspan="9"
+                                            class="text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            @include('numerology.category.trait', ['trait' => $year_numerology->getEducation()->getTraits()[$year_numerology->getEducation()->getTraitCodes()[0]]])
+                                        </td>
+                                        <td
+                                            colspan="5"
+                                            class="text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            @include('numerology.category.trait', ['trait' => $year_numerology->getEducation()->getTraits()[$year_numerology->getEducation()->getTraitCodes()[1]]])
+                                        </td>
+                                        <td
+                                            colspan="8"
+                                            class="text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            @include('numerology.category.trait', ['trait' => $year_numerology->getMindset()->getTraits()[$year_numerology->getMindset()->getTraitCodes()[0]]])
+                                        </td>
+                                        <td
+                                            colspan="6"
+                                            class="text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            @include('numerology.category.trait', ['trait' => $year_numerology->getMindset()->getTraits()[$year_numerology->getMindset()->getTraitCodes()[1]]])
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
