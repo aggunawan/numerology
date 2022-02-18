@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $user = auth()->user();
         $date = now()->toDateString();
 
-        if ($user instanceof User) $date = $user->birth_date;
+        if ($user instanceof User && $user->birth_date) $date = $user->birth_date;
         if (collect($request->all())->filter()->has('birth_date'))
             $date = Carbon::parse($request->get('birth_date'))->toDateString();
 
