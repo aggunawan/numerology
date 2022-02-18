@@ -61,24 +61,32 @@
     <div class="mx-auto">
         <div class="flex flex-col xl:flex-row justify-center md:pt-4 px-4 gap-4">
             <div class="flex flex-col justify-center md:grid md:grid-cols-2 gap-4 col-span-5 xl:w-4.5/12">
-                @include('numerology.category')
-                @include('numerology.category')
-                @include('numerology.category')
-                @include('numerology.category')
-                @include('numerology.category')
-                @include('numerology.category')
+                @include('numerology.category', ['numerology' => $numerology->getDayMaster()])
+                @include('numerology.category', ['numerology' => $numerology->getMindset()])
+                @include('numerology.category', ['numerology' => $numerology->getSpiritual()])
+                @include('numerology.category', ['numerology' => $numerology->getBelief()])
+                @include('numerology.category', ['numerology' => $numerology->getPartner()])
+                @include('numerology.category', ['numerology' => $numerology->getEmotional()])
+                @include('numerology.category', ['numerology' => $numerology->getTalent()])
+                @include('numerology.category', ['numerology' => $numerology->getRelationship()])
+                @include('numerology.category', ['numerology' => $numerology->getSon()])
+                @include('numerology.category', ['numerology' => $numerology->getCharacter()])
             </div>
             <div class="flex flex-col flex-auto justify-center gap-4 col-span-3 center">
-                @include('numerology.category')
-                @include('numerology.dark-category')
+                @include('numerology.category', ['numerology' => $numerology->getPhysical()])
+                @include('numerology.dark-category', ['numerology' => $numerology->getGoal()])
             </div>
             <div class="flex flex-col justify-center md:grid md:grid-cols-2 gap-4 col-span-5 xl:w-4.5/12">
-                @include('numerology.category')
-                @include('numerology.category')
-                @include('numerology.category')
-                @include('numerology.category')
-                @include('numerology.category')
-                @include('numerology.category')
+                @include('numerology.category', ['numerology' => $numerology->getEducation()])
+                @include('numerology.category', ['numerology' => $numerology->getCulture()])
+                @include('numerology.category', ['numerology' => $numerology->getIntellectual()])
+                @include('numerology.category', ['numerology' => $numerology->getCareer()])
+                @include('numerology.category', ['numerology' => $numerology->getAmbition()])
+                @include('numerology.category', ['numerology' => $numerology->getSocial()])
+                @include('numerology.category', ['numerology' => $numerology->getBusiness()])
+                @include('numerology.category', ['numerology' => $numerology->getFinancial()])
+                @include('numerology.category', ['numerology' => $numerology->getDaughter()])
+                @include('numerology.category', ['numerology' => $numerology->getHealth()])
             </div>
         </div>
     </div>
