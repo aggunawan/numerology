@@ -61,7 +61,7 @@ jobs:
             /usr/local/lsws/lsphp80/bin/php artisan queue:restart
             npm install
             npm run prod
-            /usr/local/lsws/lsphp74/bin/php artisan optimize
+            /usr/local/lsws/lsphp80/bin/php artisan optimize
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           privateKey: ${{ secrets.KEY }}
