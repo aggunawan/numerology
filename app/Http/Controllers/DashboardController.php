@@ -14,6 +14,7 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $carbon = Carbon::parse($this->getBirthDate($request));
+        $currentYear = $request->get('year', now()->format('Y'));
 
         return view('dashboard.index', [
             'birth_date' => $carbon->format('m/d/Y'),
@@ -26,9 +27,11 @@ class DashboardController extends Controller
                 $carbon->format('d'),
                 $carbon->format('m'),
                 $carbon->format('Y'),
-                $request->get('year', now()->format('Y'))
+                $currentYear
             ),
-            'months' => $this->getMonths()
+            'months' => $this->getMonths(),
+            'tab' => $request->get('tab', 'summary'),
+            'currentYear' => $currentYear,
         ]);
     }
 
@@ -46,14 +49,19 @@ class DashboardController extends Controller
 
     private function getMonths(): array
     {
-        $month = [];
-        $range = CarbonPeriod::create(now()->startOfYear(), now()->endOfYear());
-        $range->setDateInterval(DateInterval::createFromDateString('1 month'));
-
-        foreach ($range as $item) {
-            $month[] = $item->format('F');
-        }
-
-        return $month;
+        return [
+            'January' => [[[10, 5], 'getDayMaster'], [[8, 8], 'getCulture']],
+            'February' => [[[9, 5], 'getEducation'], [[8, 6], 'getMindset']],
+            'March' => [[[10, 5], 'getPartner'], [[8, 8], 'getAmbition']],
+            'April' => [[[8, 5], 'getEmotional'], [[9, 9], 'getSocial']],
+            'May' => [[[7, 5, 4], 'getBelief'], [[5, 5, 5], 'getCareer']],
+            'June' => [[[6, 5, 4], 'getTalent'], [[5, 5, 5], 'getBusiness']],
+            'July' => [[[7, 5, 4], 'getIntellectual'], [[5, 5, 5], 'getSpiritual']],
+            'August' => [[[7, 5, 4], 'getRelationship'], [[5, 5, 5], 'getFinancial']],
+            'September' => [[[7, 5, 4], 'getSon'], [[5, 5, 4], 'getDaughter']],
+            'October' => [[[7, 5, 4], 'getPhysical'], [[5, 5, 5], 'getGoal']],
+            'November' => [[[9, 9, 7, 5], 'getCharacter']],
+            'December' => [[[13, 9, 4, 5], 'getHealth']],
+        ];
     }
 }
