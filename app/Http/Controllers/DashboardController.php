@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BirthDateList;
 use App\Models\Person;
+use App\Models\User;
 use App\Objects\Person as PersonObject;
 use App\Objects\StaticNumerology;
 use Carbon\Carbon;
@@ -58,7 +59,12 @@ class DashboardController extends Controller
             }
         }
 
-        if (count($names) == 0) $names[] = auth()->user()->getAuthIdentifierName();
+        $user = auth()->user();
+
+        if (count($names) == 0 && $user instanceof User) {
+            $names[] = $user->name;
+        }
+
         if ($day == 0 && $month == 0 && $year == 0) {
             $day = (int) date('d');
             $month = (int) date('m');
