@@ -2,49 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\BirthDateList;
+use App\Models\Person;
+use App\Objects\Person as PersonObject;
 use App\Objects\StaticNumerology;
 use Carbon\Carbon;
-use Carbon\CarbonPeriod;
-use DateInterval;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $carbon = Carbon::parse($this->getBirthDate($request));
+        $person = $this->getBirthDate();
         $currentYear = $request->get('year', now()->format('Y'));
 
         return view('dashboard.index', [
-            'birth_date' => $carbon->format('m/d/Y'),
             'numerology' => new StaticNumerology(
-                $carbon->format('d'),
-                $carbon->format('m'),
-                $carbon->format('Y')
+                $person->getBirthDate()->getDay(),
+                $person->getBirthDate()->getMonth(),
+                $person->getBirthDate()->getYear()
             ),
             'year_numerology' => new StaticNumerology(
-                $carbon->format('d'),
-                $carbon->format('m'),
-                $carbon->format('Y'),
+                $person->getBirthDate()->getDay(),
+                $person->getBirthDate()->getMonth(),
+                $person->getBirthDate()->getYear(),
                 $currentYear
             ),
+            'name' => $person->getName(),
             'months' => $this->getMonths(),
             'tab' => $request->get('tab', 'summary'),
             'currentYear' => $currentYear,
+            'people' => $this->getPeople(),
         ]);
     }
 
-    private function getBirthDate(Request $request): string
+    private function getBirthDate(): PersonObject
     {
-        $user = auth()->user();
-        $date = now()->toDateString();
+        $list = (new BirthDateList())
+            ->newQuery()
+            ->where('user_id', auth()->user()->getAuthIdentifier())
+            ->first();
 
-        if ($user instanceof User && $user->birth_date) $date = $user->birth_date;
-        if (collect($request->all())->filter()->has('birth_date'))
-            $date = Carbon::parse($request->get('birth_date'))->toDateString();
+        $names = [];
+        $day = 0;
+        $month = 0;
+        $year = 0;
 
-        return $date;
+        if ($list instanceof BirthDateList) {
+            foreach ($list->content as $item) {
+                $names[] = $item['name'];
+                $date = Carbon::parse($item['date']);
+                $day += (int) $date->format('d');
+                $month += (int) $date->format('m');
+                $year += (int) $date->format('Y');
+            }
+        }
+
+        if (count($names) == 0) $names[] = auth()->user()->getAuthIdentifierName();
+        if ($day == 0 && $month == 0 && $year == 0) {
+            $day = (int) date('d');
+            $month = (int) date('m');
+            $year = (int) date('Y');
+        }
+
+
+        return new PersonObject(implode(', ', $names), "$month/$day/$year");
     }
 
     private function getMonths(): array
@@ -63,5 +85,14 @@ class DashboardController extends Controller
             'November' => [[[9, 9, 7, 5], 'getCharacter']],
             'December' => [[[13, 9, 4, 5], 'getHealth']],
         ];
+    }
+
+    private function getPeople(): array
+    {
+        return (new Person())
+            ->newQuery()
+            ->where('user_id', auth()->user()->getAuthIdentifier())
+            ->pluck('name', 'id')
+            ->toArray();
     }
 }
