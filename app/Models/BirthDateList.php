@@ -2,28 +2,24 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Orchid\Filters\Filterable;
-use Orchid\Screen\AsSource;
 
 /**
- * @property string $name
- * @property Carbon $birth_date
+ * @property array $content
  */
-class Person extends Model
+class BirthDateList extends Model
 {
-    use AsSource, HasFactory, Filterable;
+    use HasFactory;
 
     protected $fillable = [
-        'name',
-        'birth_date',
+        'content',
+        'user_id',
     ];
 
     protected $casts = [
-        'birth_date' => 'date',
+        'content' => 'array'
     ];
 
     public function user(): BelongsTo

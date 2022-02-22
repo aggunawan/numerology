@@ -20,17 +20,17 @@ class BirthDate
         return "$this->month/$this->day/$this->year";
     }
 
-    public function getDay()
+    public function getDay(): int
     {
         return $this->day;
     }
 
-    public function getMonth()
+    public function getMonth(): int
     {
         return $this->month;
     }
 
-    public function getYear()
+    public function getYear(): int
     {
         return $this->year;
     }
