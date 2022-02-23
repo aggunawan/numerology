@@ -5,6 +5,8 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Orchid\Filters\Filterable;
+use Orchid\Screen\AsSource;
 
 /**
  * @property int $id
@@ -13,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SharedPerson extends Model
 {
-    use HasFactory;
+    use HasFactory, AsSource, Filterable;
 
     protected $fillable = [
         'name',

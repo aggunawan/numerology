@@ -26,7 +26,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Dashboard $dashboard)
     {
         $permissions = ItemPermission::group('Main')
-            ->addPermission('palaces', 'Palace');
+            ->addPermission('palaces', 'Palace')
+            ->addPermission('shared_people', 'Shared People');
 
         $dashboard->registerPermissions($permissions);
     }
