@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BirthDateList;
+use App\Models\Palace;
 use App\Models\Person;
 use App\Models\User;
 use App\Objects\Person as PersonObject;
@@ -34,6 +35,7 @@ class DashboardController extends Controller
             'tab' => $request->get('tab', 'summary'),
             'currentYear' => $currentYear,
             'people' => $this->getPeople(),
+            'palaces' => $this->getPalaces(),
         ]);
     }
 
@@ -100,5 +102,20 @@ class DashboardController extends Controller
             ->where('user_id', auth()->user()->getAuthIdentifier())
             ->pluck('name', 'id')
             ->toArray();
+    }
+
+    private function getPalaces(): array
+    {
+        $result = [];
+        $palaces = (new Palace())
+            ->newQuery()
+            ->select(['code', 'name', 'color'])
+            ->get();
+
+        foreach ($palaces as $palace) {
+            $result[$palace->code] = [$palace->name, $palace->color];
+        }
+
+        return $result;
     }
 }
