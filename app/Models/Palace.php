@@ -18,6 +18,7 @@ class Palace extends Model
         'code',
         'name',
         'description',
-        'color',
+        'font_color',
+        'background_color',
     ];
 }

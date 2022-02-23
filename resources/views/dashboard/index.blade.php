@@ -147,7 +147,8 @@
                                                         @endphp
                                                         @include('numerology.category.trait', [
                                                             'trait' => $palaces[$traitCode][0] ?? $trait,
-                                                            'color' => $palaces[$traitCode][1] ?? '#e5e7eb',
+                                                            'backgroundColor' => $palaces[$traitCode][1] ?? null,
+                                                            'color' => $palaces[$traitCode][2] ?? null,
                                                         ])
                                                     </td>
                                                 @endforeach

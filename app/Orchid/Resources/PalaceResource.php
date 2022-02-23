@@ -19,7 +19,8 @@ class PalaceResource extends Resource
             Input::make('code')->required()->type('number')->title('Code'),
             Input::make('name')->required()->title('Name'),
             Input::make('description')->required()->title('Description'),
-            Input::make('color')->required()->title('Color (Hexadecimal)'),
+            Input::make('font_color')->required()->title('Font Color (Hexadecimal)'),
+            Input::make('background_color')->required()->title('Background Color (Hexadecimal)'),
         ];
     }
 
@@ -31,7 +32,8 @@ class PalaceResource extends Resource
             'code' => ['required', 'numeric', 'min:0', 'max:255', $unique],
             'name' => ['required', 'string', 'min:1', 'max:255'],
             'description' => ['required', 'string', 'min:1', 'max:255'],
-            'color' => ['required', 'string', 'min:1', 'max:7', 'starts_with:#'],
+            'font_color' => ['required', 'string', 'min:1', 'max:7', 'starts_with:#'],
+            'background_color' => ['required', 'string', 'min:1', 'max:7', 'starts_with:#'],
         ];
     }
 
@@ -40,7 +42,7 @@ class PalaceResource extends Resource
         return [
             TD::make('id'),
             TD::make('name')->render(function ($model) {
-                return "<span style=\"color: $model->color;\">$model->name</span>";
+                return "<span style=\"color: $model->background_color;\">$model->name</span>";
             }),
             TD::make('created_at', 'Date of creation')
                 ->render(function ($model) {
