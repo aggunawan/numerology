@@ -52,5 +52,33 @@ class RolesTableSeeder extends Seeder
             ]);
             $client->save();
         }
+
+        if (!$role->newQuery()->where('slug', 'practitioner')->exists()) {
+            $client = new Role([
+                'name' => 'Practitioner',
+                'slug' => 'practitioner',
+                'permissions' => [
+                    "platform.index" => true,
+                    "platform.systems.roles" => false,
+                    "platform.systems.users" => false,
+                    "platform.systems.attachment" => false,
+                ],
+            ]);
+            $client->save();
+        }
+
+        if (!$role->newQuery()->where('slug', 'trainer')->exists()) {
+            $client = new Role([
+                'name' => 'Trainer',
+                'slug' => 'trainer',
+                'permissions' => [
+                    "platform.index" => true,
+                    "platform.systems.roles" => false,
+                    "platform.systems.users" => false,
+                    "platform.systems.attachment" => false,
+                ],
+            ]);
+            $client->save();
+        }
     }
 }

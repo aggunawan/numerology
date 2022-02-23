@@ -34,10 +34,12 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('platform.main')">
-                            {{ __('Admin Panel') }}
-                        </x-dropdown-link>
-                        <!-- Authentication -->
+                        @if(auth()->user()->hasAccess('platform.index'))
+                            <x-dropdown-link :href="route('platform.main')">
+                                {{ __('Admin Panel') }}
+                            </x-dropdown-link>
+                        @endif
+
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
