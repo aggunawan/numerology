@@ -11,9 +11,13 @@
     </div>
 
     <ul class="my-4 space-y-3">
-        @foreach($numerology->getTraits() as $trait)
+        @foreach($numerology->getTraitCodes() as $trait)
             <li>
-                @include('numerology.category.trait')
+                @include('numerology.category.trait', [
+                    'trait' => isset($palaces[$trait]) ? $palaces[$trait][0] : $numerology->getTraits()[$trait],
+                    'color' => isset($palaces[$trait]) ? $palaces[$trait][2] : null,
+                    'backgroundColor' => isset($palaces[$trait]) ? $palaces[$trait][1] : null,
+                ])
             </li>
         @endforeach
     </ul>

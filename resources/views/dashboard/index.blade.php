@@ -60,32 +60,32 @@
                 role="tabpanel"
                 aria-labelledby="profile-tab">
                 <div class="flex flex-col justify-center md:grid md:grid-cols-2 gap-4 col-span-5 xl:w-4.5/12">
-                    @include('numerology.category', ['numerology' => $numerology->getDayMaster()])
-                    @include('numerology.category', ['numerology' => $numerology->getMindset()])
-                    @include('numerology.category', ['numerology' => $numerology->getSpiritual()])
-                    @include('numerology.category', ['numerology' => $numerology->getBelief()])
-                    @include('numerology.category', ['numerology' => $numerology->getPartner()])
-                    @include('numerology.category', ['numerology' => $numerology->getEmotional()])
-                    @include('numerology.category', ['numerology' => $numerology->getTalent()])
-                    @include('numerology.category', ['numerology' => $numerology->getRelationship()])
-                    @include('numerology.category', ['numerology' => $numerology->getSon()])
-                    @include('numerology.category', ['numerology' => $numerology->getCharacter()])
+                    @include('numerology.category', ['numerology' => $numerology->getDayMaster(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getMindset(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getSpiritual(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getBelief(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getPartner(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getEmotional(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getTalent(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getRelationship(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getSon(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getCharacter(), 'palaces' => $palaces])
                 </div>
                 <div class="flex flex-col flex-auto justify-center gap-4 col-span-3 center">
-                    @include('numerology.category', ['numerology' => $numerology->getPhysical()])
-                    @include('numerology.dark-category', ['numerology' => $numerology->getGoal()])
+                    @include('numerology.category', ['numerology' => $numerology->getPhysical(), 'palaces' => $palaces])
+                    @include('numerology.dark-category', ['numerology' => $numerology->getGoal(), 'palaces' => $palaces])
                 </div>
                 <div class="flex flex-col justify-center md:grid md:grid-cols-2 gap-4 col-span-5 xl:w-4.5/12">
-                    @include('numerology.category', ['numerology' => $numerology->getEducation()])
-                    @include('numerology.category', ['numerology' => $numerology->getCulture()])
-                    @include('numerology.category', ['numerology' => $numerology->getIntellectual()])
-                    @include('numerology.category', ['numerology' => $numerology->getCareer()])
-                    @include('numerology.category', ['numerology' => $numerology->getAmbition()])
-                    @include('numerology.category', ['numerology' => $numerology->getSocial()])
-                    @include('numerology.category', ['numerology' => $numerology->getBusiness()])
-                    @include('numerology.category', ['numerology' => $numerology->getFinancial()])
-                    @include('numerology.category', ['numerology' => $numerology->getDaughter()])
-                    @include('numerology.category', ['numerology' => $numerology->getHealth()])
+                    @include('numerology.category', ['numerology' => $numerology->getEducation(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getCulture(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getIntellectual(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getCareer(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getAmbition(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getSocial(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getBusiness(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getFinancial(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getDaughter(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getHealth(), 'palaces' => $palaces])
                 </div>
             </div>
             <div
@@ -141,7 +141,15 @@
                                                     <td
                                                         colspan="{{ $item }}"
                                                         class="text-sm font-medium text-gray-900 whitespace-nowrap">
-                                                        @include('numerology.category.trait', ['trait' => $year_numerology->{$cell[1]}()->getTraits()[$year_numerology->{$cell[1]}()->getTraitCodes()[$i]]])
+                                                        @php
+                                                            $traitCode = $year_numerology->{$cell[1]}()->getTraitCodes()[$i];
+                                                            $trait = $year_numerology->{$cell[1]}()->getTraits()[$traitCode];
+                                                        @endphp
+                                                        @include('numerology.category.trait', [
+                                                            'trait' => $palaces[$traitCode][0] ?? $trait,
+                                                            'backgroundColor' => $palaces[$traitCode][1] ?? null,
+                                                            'color' => $palaces[$traitCode][2] ?? null,
+                                                        ])
                                                     </td>
                                                 @endforeach
                                             @endforeach

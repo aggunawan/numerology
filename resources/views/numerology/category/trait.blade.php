@@ -1,6 +1,7 @@
 <button
         type="button"
-        class="w-full text-left flex items-center p-3 text-base font-bold text-gray-900 bg-gray-200 rounded-lg hover:bg-gray-100 group hover:shadow">
+        style="background-color: {{ $backgroundColor ?? '#e5e7eb' }}; color: {{ $color ?? '#1f2937' }}"
+        class="w-full text-left flex items-center p-3 text-base font-bold rounded-lg hover:bg-gray-100 group hover:shadow">
                 <span class="bg-white text-gray-800 text-sm font-semibold inline-flex items-center p-1.5 rounded-full mr-2">
                     <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path
                                 fill-rule="evenodd"
