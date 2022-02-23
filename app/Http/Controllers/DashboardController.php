@@ -31,7 +31,7 @@ class DashboardController extends Controller
                 $currentYear
             ),
             'name' => $person->getName(),
-            'months' => $this->getMonths(),
+            'months' => $this->getMonths(Carbon::parse("$currentYear-01-01")->isLeapYear()),
             'tab' => $request->get('tab', 'summary'),
             'currentYear' => $currentYear,
             'people' => $this->getPeople(),
@@ -77,11 +77,11 @@ class DashboardController extends Controller
         return new PersonObject(implode(', ', $names), "$month/$day/$year");
     }
 
-    private function getMonths(): array
+    private function getMonths(bool $leap): array
     {
         return [
             'January' => [[[10, 5], 'getDayMaster'], [[8, 8], 'getCulture']],
-            'February' => [[[9, 5], 'getEducation'], [[8, 6], 'getMindset']],
+            'February' => [[[9, 5], 'getEducation'], [[8, ($leap ? 7 : 6)], 'getMindset']],
             'March' => [[[10, 5], 'getPartner'], [[8, 8], 'getAmbition']],
             'April' => [[[8, 5], 'getEmotional'], [[9, 9], 'getSocial']],
             'May' => [[[7, 5, 4], 'getBelief'], [[5, 5, 5], 'getCareer']],
