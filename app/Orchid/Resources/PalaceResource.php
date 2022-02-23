@@ -75,4 +75,9 @@ class PalaceResource extends Resource
     {
         return [];
     }
+
+    public static function permission(): ?string
+    {
+        return 'palaces';
+    }
 }
