@@ -10,6 +10,12 @@ use Orchid\Platform\Models\User as Authenticatable;
  */
 class User extends Authenticatable
 {
+    public const SUPER_ADMIN = 'super-admin';
+    public const ADMIN = 'admin';
+    public const CLIENT = 'client';
+    public const PRACTITIONER = 'practitioner';
+    public const TRAINER = 'trainer';
+
     protected $fillable = [
         'name',
         'email',

@@ -14,23 +14,25 @@
         </div>
 
         <div class="flex flex-col gap-2 col-span-7">
-            <div class="flex flex-col gap-2">
-                <label for="people" class="block text-sm font-medium text-gray-900">People Database</label>
-                <select
-                    wire:model="selectedPerson"
-                    id="people"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full">
-                    <option value="">Select from database</option>
-                    @foreach($people as $id => $person)
-                        <option value="{{ $id }}">{{ $person }}</option>
-                    @endforeach
-                </select>
+            @if($this->has_list)
+                <div class="flex flex-col gap-2">
+                    <label for="people" class="block text-sm font-medium text-gray-900">People Database</label>
+                    <select
+                        wire:model="selectedPerson"
+                        id="people"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full">
+                        <option value="">Select from database</option>
+                        @foreach($people as $id => $person)
+                            <option value="{{ $id }}">{{ $person }}</option>
+                        @endforeach
+                    </select>
 
-                <button
-                    type="submit"
-                    wire:click="addFromList"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">Save</button>
-            </div>
+                    <button
+                        type="submit"
+                        wire:click="addFromList"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">Save</button>
+                </div>
+            @endif
 
             <div class="flex flex-col gap-2">
                 <label for="name" class="block text-sm font-medium text-gray-900">Name</label>
