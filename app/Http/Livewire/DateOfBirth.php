@@ -4,7 +4,9 @@ namespace App\Http\Livewire;
 
 use App\Models\BirthDateList;
 use App\Models\Person;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class DateOfBirth extends Component
@@ -109,7 +111,7 @@ class DateOfBirth extends Component
 
         if ($list instanceof BirthDateList) {
             $content = collect($list->content);
-            if ($content->count() < 3) {
+            if ($content->count() < $this->getMaxDateOfBirth()) {
                 $list->content = $content->push([
                     'name' => $name,
                     'date' => Carbon::parse($date)->toDateString()
@@ -118,5 +120,25 @@ class DateOfBirth extends Component
                 $list->save();
             }
         }
+    }
+
+    protected function getMaxDateOfBirth(): int
+    {
+        $roles = $this->getRoles();
+        if ($roles->contains(User::TRAINER)) return 5;
+        if ($roles->contains(User::PRACTITIONER)) return 3;
+        return 1;
+    }
+
+    public function getHasListProperty(): bool
+    {
+        $roles = $this->getRoles();
+        return $roles->contains(User::PRACTITIONER) || $roles->contains(User::TRAINER);
+    }
+
+    protected function getRoles(): Collection
+    {
+        /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+        return auth()->user()->roles()->pluck('slug');
     }
 }
