@@ -18,6 +18,7 @@ class CreatePalacesTable extends Migration
             $table->unsignedTinyInteger('code')->unique();
             $table->string('name');
             $table->string('description');
+            $table->string('color', 7);
             $table->timestamps();
         });
     }
