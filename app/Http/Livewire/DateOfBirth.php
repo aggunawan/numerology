@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\BirthDateList;
 use App\Models\Person;
+use App\Models\SharedPerson;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -51,7 +52,17 @@ class DateOfBirth extends Component
 
     public function getPersonProperty()
     {
-        return $this->selectedPerson ? (new Person())->newQuery()->find($this->selectedPerson) : null;
+        if ($this->selectedPerson) {
+            $query = new SharedPerson();
+
+            if (str_starts_with($this->selectedPerson, 'person')) {
+                $query = new Person();
+            }
+
+            return $query->newQuery()->find(explode('-', $this->selectedPerson)[1]);
+        }
+
+        return null;
     }
 
     public function getListProperty()
@@ -96,7 +107,7 @@ class DateOfBirth extends Component
     {
         $person = $this->getPersonProperty();
 
-        if ($person instanceof Person) {
+        if ($person instanceof Person || $person instanceof SharedPerson) {
             $this->updateList($person->name, $person->birth_date->toDateString());
         }
     }

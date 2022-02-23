@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BirthDateList;
 use App\Models\Palace;
 use App\Models\Person;
+use App\Models\SharedPerson;
 use App\Models\User;
 use App\Objects\Person as PersonObject;
 use App\Objects\StaticNumerology;
@@ -97,11 +98,17 @@ class DashboardController extends Controller
 
     private function getPeople(): array
     {
-        return (new Person())
-            ->newQuery()
-            ->where('user_id', auth()->user()->getAuthIdentifier())
-            ->pluck('name', 'id')
-            ->toArray();
+        $list = [];
+
+        foreach ($this->getPrivatePersonList() as $i => $person) {
+            $list["person-$i"] = $person;
+        }
+
+        foreach ($this->getSharedPersonList() as $i => $person) {
+            $list["shared_person-$i"] = $person;
+        }
+
+        return $list;
     }
 
     private function getPalaces(): array
@@ -117,5 +124,22 @@ class DashboardController extends Controller
         }
 
         return $result;
+    }
+
+    private function getPrivatePersonList(): array
+    {
+        return (new Person())
+            ->newQuery()
+            ->where('user_id', auth()->user()->getAuthIdentifier())
+            ->pluck('name', 'id')
+            ->toArray();
+    }
+
+    private function getSharedPersonList(): array
+    {
+        return (new SharedPerson())
+            ->newQuery()
+            ->pluck('name', 'id')
+            ->toArray();
     }
 }
