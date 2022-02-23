@@ -56,10 +56,11 @@ class PalaceResource extends Resource
         return [
             Sight::make('id'),
             Sight::make('name')->render(function ($model) {
-                return "<span style=\"color: $model->color;\">$model->name</span>";
+                return "<span style=\"color: $model->background_color;\">$model->name</span>";
             }),
             Sight::make('description'),
-            Sight::make('color'),
+            Sight::make('font_color'),
+            Sight::make('background_color'),
             Sight::make('created_at', 'Date of creation')
                 ->render(function ($model) {
                     return $model->created_at->toDateTimeString();
@@ -74,5 +75,10 @@ class PalaceResource extends Resource
     public function filters(): array
     {
         return [];
+    }
+
+    public static function permission(): ?string
+    {
+        return 'palaces';
     }
 }
