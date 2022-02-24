@@ -52,40 +52,52 @@
         </div>
     </div>
 
-    <div class="mx-auto">
+    <div class="mx-auto container pb-16">
         <div id="myTabContent">
             <div
-                class="{{ $tab == 'summary' ? null : 'hidden' }} flex flex-col xl:flex-row justify-center md:pt-4 px-4 gap-4"
+                class="{{ $tab == 'summary' ? null : 'hidden' }} flex flex-col justify-center md:pt-4 px-4 gap-4"
                 id="profile"
                 role="tabpanel"
                 aria-labelledby="profile-tab">
-                <div class="flex flex-col justify-center md:grid md:grid-cols-2 gap-4 col-span-5 xl:w-4.5/12">
-                    @include('numerology.category', ['numerology' => $numerology->getDayMaster(), 'palaces' => $palaces])
+                <div class="grid grid-cols-6 gap-4">
+                    <div class="col-start-2">
+                        @include('numerology.dark-category', ['numerology' => $numerology->getDayMaster(), 'palaces' => $palaces])
+                    </div>
                     @include('numerology.category', ['numerology' => $numerology->getMindset(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getSpiritual(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getBelief(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getPartner(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getEmotional(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getTalent(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getRelationship(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getSon(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getCharacter(), 'palaces' => $palaces])
-                </div>
-                <div class="flex flex-col flex-auto justify-center gap-4 col-span-3 center">
-                    @include('numerology.category', ['numerology' => $numerology->getPhysical(), 'palaces' => $palaces])
-                    @include('numerology.dark-category', ['numerology' => $numerology->getGoal(), 'palaces' => $palaces])
-                </div>
-                <div class="flex flex-col justify-center md:grid md:grid-cols-2 gap-4 col-span-5 xl:w-4.5/12">
                     @include('numerology.category', ['numerology' => $numerology->getEducation(), 'palaces' => $palaces])
                     @include('numerology.category', ['numerology' => $numerology->getCulture(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getIntellectual(), 'palaces' => $palaces])
+                </div>
+                <div class="grid grid-cols-6 gap-4">
+                    @include('numerology.category', ['numerology' => $numerology->getTalent(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getPartner(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getBelief(), 'palaces' => $palaces])
                     @include('numerology.category', ['numerology' => $numerology->getCareer(), 'palaces' => $palaces])
                     @include('numerology.category', ['numerology' => $numerology->getAmbition(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getSocial(), 'palaces' => $palaces])
                     @include('numerology.category', ['numerology' => $numerology->getBusiness(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getFinancial(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getDaughter(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getHealth(), 'palaces' => $palaces])
+                </div>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        @include('numerology.category', ['numerology' => $numerology->getSpiritual(), 'palaces' => $palaces])
+                        @include('numerology.category', ['numerology' => $numerology->getEmotional(), 'palaces' => $palaces])
+                        @include('numerology.category', ['numerology' => $numerology->getRelationship(), 'palaces' => $palaces])
+                        @include('numerology.category', ['numerology' => $numerology->getSon(), 'palaces' => $palaces])
+                        <div class="col-span-2">
+                            @include('numerology.category-with-hidden', ['numerology' => $numerology->getCharacter(), 'palaces' => $palaces])
+                        </div>
+                    </div>
+                    <div class="flex flex-col px-20 gap-4">
+                        @include('numerology.category', ['numerology' => $numerology->getPhysical(), 'palaces' => $palaces])
+                        @include('numerology.category-without-year', ['numerology' => $numerology->getGoal(), 'palaces' => $palaces])
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        @include('numerology.category', ['numerology' => $numerology->getSocial(), 'palaces' => $palaces])
+                        @include('numerology.category', ['numerology' => $numerology->getIntellectual(), 'palaces' => $palaces])
+                        @include('numerology.category', ['numerology' => $numerology->getDaughter(), 'palaces' => $palaces])
+                        @include('numerology.category', ['numerology' => $numerology->getFinancial(), 'palaces' => $palaces])
+                        <div class="col-span-2">
+                            @include('numerology.category-with-hidden', ['numerology' => $numerology->getHealth(), 'palaces' => $palaces, 'swap' => true])
+                        </div>
+                    </div>
                 </div>
             </div>
             <div
@@ -147,8 +159,9 @@
                                                         @endphp
                                                         @include('numerology.category.trait', [
                                                             'trait' => $palaces[$traitCode][0] ?? $trait,
-                                                            'backgroundColor' => $palaces[$traitCode][1] ?? null,
+                                                            'backgroundColor' => $palaces[$traitCode][1] ?? '#e5e7eb',
                                                             'color' => $palaces[$traitCode][2] ?? null,
+                                                            'buttonClass' => 'p-3'
                                                         ])
                                                     </td>
                                                 @endforeach
