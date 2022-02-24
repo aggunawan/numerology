@@ -109,6 +109,7 @@ class SharedPersonResource extends Resource
                 ->render(function ($model) {
                     return $model->birth_date->format('d F Y');
                 }),
+            Sight::make('note'),
             Sight::make('created_at', 'Date of creation')
                 ->render(function ($model) {
                     return $model->created_at->toDateTimeString();

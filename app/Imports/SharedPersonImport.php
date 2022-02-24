@@ -20,7 +20,8 @@ class SharedPersonImport implements ToModel, WithHeadingRow
             $carbon = Carbon::parse("$day-$month-$year");
             return new SharedPerson([
                 'name' => $row['name'],
-                'birth_date' => $carbon
+                'birth_date' => $carbon,
+                'note' => $row['note'],
             ]);
         } catch (Exception $ex) {
             return [];
