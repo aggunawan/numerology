@@ -1,4 +1,4 @@
-<div class="p-2 w-full sm:max-w-md md:max-w-full mx-auto bg-gray-800 rounded-lg border shadow-md text-white">
+<div class="p-2 w-full sm:max-w-md md:max-w-full mx-auto bg-gray-200 rounded-lg border shadow-md">
     <div class="flex justify-between">
         <p class="text-sm font-extrabold uppercase px-4 mb-0">
             {{ $numerology->getName() }}
@@ -15,6 +15,7 @@
                     'trait' => isset($palaces[$trait]) ? $palaces[$trait][0] : $numerology->getTraits()[$trait],
                     'color' => isset($palaces[$trait]) ? $palaces[$trait][2] : null,
                     'backgroundColor' => isset($palaces[$trait]) ? $palaces[$trait][1] : null,
+                    'buttonClass' => 'p-1',
                 ])
             </li>
         @endforeach
