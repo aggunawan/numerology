@@ -1,11 +1,14 @@
-<div class="p-4 w-full sm:max-w-md md:max-w-full mx-auto bg-gray-600 rounded-lg border shadow-md sm:p-6">
-    <div class="flex justify-between">
-        <h3 class="mb-3 text-base font-semibold text-white lg:text-xl">
+<div class="p-4 w-full sm:max-w-md md:max-w-full mx-auto bg-gray-800 rounded-lg border shadow-md text-white">
+    <div class="flex justify-between mb-4">
+        <h3 class="text-base font-bold lg:text-xl uppercase">
             {{ $numerology->getName() }}
         </h3>
+        <div class="w-auto">
+            <strong>{{ $numerology->getYear() }}</strong>
+        </div>
     </div>
 
-    <ul class="my-4 space-y-3">
+    <ul class="w-full grid gap-2">
         @foreach($numerology->getTraitCodes() as $trait)
             <li>
                 @include('numerology.category.trait', [
