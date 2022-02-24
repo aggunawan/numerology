@@ -20,6 +20,7 @@ class SharedPerson extends Model
     protected $fillable = [
         'name',
         'birth_date',
+        'note',
     ];
 
     protected $casts = [
