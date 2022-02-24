@@ -85,7 +85,7 @@
                             @include('numerology.category-with-hidden', ['numerology' => $numerology->getCharacter(), 'palaces' => $palaces])
                         </div>
                     </div>
-                    <div class="flex flex-col px-20 gap-4">
+                    <div class="flex flex-col justify-between px-20 gap-4">
                         @include('numerology.category', ['numerology' => $numerology->getPhysical(), 'palaces' => $palaces])
                         @include('numerology.category-without-year', ['numerology' => $numerology->getGoal(), 'palaces' => $palaces])
                     </div>
