@@ -7,7 +7,7 @@ use App\Imports\PersonImport;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Facades\Excel;
 
-class ProcessExcel implements ShouldQueue
+class ProcessPersonExcel implements ShouldQueue
 {
     public function handle(PersonExcelImported $event)
     {

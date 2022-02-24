@@ -20,7 +20,10 @@ class EventServiceProvider extends ServiceProvider
             AssignClientRole::class,
         ],
         'App\Events\PersonExcelImported' => [
-            'App\Listeners\ProcessExcel',
+            'App\Listeners\ProcessPersonExcel',
+        ],
+        'App\Events\SharedPersonExcelImported' => [
+            'App\Listeners\ProcessSharedPersonExcel',
         ],
     ];
 
