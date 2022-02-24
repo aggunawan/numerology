@@ -11,6 +11,7 @@ use Orchid\Crud\Resource;
 use Orchid\Crud\ResourceRequest;
 use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Quill;
 use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
@@ -27,6 +28,9 @@ class SharedPersonResource extends Resource
             DateTimer::make('birth_date')
                 ->title('Birth Date')
                 ->format('Y-m-d'),
+            Quill::make('note')
+                ->toolbar(["text", "color", "header", "list", "format"])
+                ->title('Note'),
             Upload::make('excel')
                 ->title('Excel')
                 ->acceptedFiles(implode(',', [
