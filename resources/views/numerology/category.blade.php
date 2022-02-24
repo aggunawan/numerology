@@ -1,8 +1,8 @@
-<div class="p-4 w-full sm:max-w-md md:max-w-full mx-auto bg-gray-200 rounded-lg border shadow-md">
-    <div class="flex justify-between mb-4">
-        <h3 class="text-base font-bold lg:text-xl uppercase">
+<div class="p-2 w-full sm:max-w-md md:max-w-full mx-auto bg-gray-200 rounded-lg border shadow-md">
+    <div class="flex justify-between mb-2">
+        <p class="font-extrabold uppercase px-4 mb-0">
             {{ $numerology->getName() }}
-        </h3>
+        </p>
         <div class="w-auto">
             <strong>{{ $numerology->getYear() }}</strong>
         </div>
