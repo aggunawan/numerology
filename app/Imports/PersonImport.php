@@ -29,6 +29,7 @@ class PersonImport implements ToModel, WithHeadingRow
                 'name' => $row['name'],
                 'birth_date' => $carbon,
                 'user_id' => $this->user_id,
+                'note' => $row['note'],
             ]);
         } catch (Exception $ex) {
             return [];

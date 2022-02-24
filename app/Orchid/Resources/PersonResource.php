@@ -12,6 +12,7 @@ use Orchid\Crud\Resource;
 use Orchid\Crud\ResourceRequest;
 use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Quill;
 use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
@@ -33,6 +34,9 @@ class PersonResource extends Resource
             DateTimer::make('birth_date')
                 ->title('Birth Date')
                 ->format('Y-m-d'),
+            Quill::make('note')
+                ->toolbar(["text", "color", "header", "list", "format"])
+                ->title('Note'),
             Upload::make('excel')
                 ->title('Excel')
                 ->acceptedFiles(implode(',', [
@@ -70,6 +74,7 @@ class PersonResource extends Resource
                 ->render(function ($model) {
                     return $model->birth_date->format('d F Y');
                 }),
+            Sight::make('note'),
             Sight::make('created_at', 'Date of creation')
                 ->render(function ($model) {
                     return $model->created_at->toDateTimeString();

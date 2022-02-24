@@ -20,6 +20,7 @@ class Person extends Model
     protected $fillable = [
         'name',
         'birth_date',
+        'note',
         'user_id',
     ];
 
