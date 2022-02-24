@@ -19,6 +19,9 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
             AssignClientRole::class,
         ],
+        'App\Events\PersonExcelImported' => [
+            'App\Listeners\ProcessExcel',
+        ],
     ];
 
     /**

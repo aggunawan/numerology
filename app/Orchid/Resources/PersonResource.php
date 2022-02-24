@@ -2,13 +2,17 @@
 
 namespace App\Orchid\Resources;
 
+use App\Events\PersonExcelImported;
 use App\Models\Person;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\Rule;
+use Orchid\Attachment\Models\Attachment;
 use Orchid\Crud\Resource;
 use Orchid\Crud\ResourceRequest;
 use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
 
@@ -25,11 +29,19 @@ class PersonResource extends Resource
     {
         return [
             Input::make('name')
-                ->required()
                 ->title('Name'),
             DateTimer::make('birth_date')
                 ->title('Birth Date')
-                ->format('Y-m-d')
+                ->format('Y-m-d'),
+            Upload::make('excel')
+                ->title('Excel')
+                ->acceptedFiles(implode(',', [
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'application/vnd.ms-excel.sheet.binary.macroEnabled.12',
+                    'application/vnd.ms-excel',
+                    'application/vnd.ms-excel.sheet.macroEnabled.12',
+                ]))
+                ->maxFiles(1),
         ];
     }
 
@@ -71,20 +83,56 @@ class PersonResource extends Resource
 
     public function filters(): array
     {
-        return [ ];
+        return [];
     }
 
     public function rules(Model $model): array
     {
         return [
-            'name' => ['required', 'min:1', 'max:255'],
-            'birth_date' => ['required', 'date'],
+            'name' => [
+                Rule::requiredIf(function () {
+                    return count($this->getUploadedExcels()) == 0;
+                }),
+                'max:255'
+            ],
+            'birth_date' => [
+                Rule::requiredIf(function () {
+                    return count($this->getUploadedExcels()) == 0;
+                })
+            ],
         ];
     }
 
     public function onSave(ResourceRequest $request, Model $model)
     {
-        $request->request->add(['user_id' => auth()->user()->getAuthIdentifier()]);
-        parent::onSave($request, $model);
+        if (count($this->getUploadedExcels()) == 0) {
+            $request->request->add(['user_id' => auth()->user()->getAuthIdentifier()]);
+            parent::onSave($request, $model);
+        } else {
+            $this->parseExcel($this->getUploadedExcels()[0]);
+        }
+    }
+
+    private function getUploadedExcels()
+    {
+        return collect(request()->all()['model'])->get('excel', []);
+    }
+
+    private function parseExcel(int $int)
+    {
+        $file = (new Attachment())->newQuery()->find($int);
+
+        if ($file instanceof Attachment) {
+            /**
+             * @noinspection PhpUndefinedFieldInspection
+             * @noinspection PhpPossiblePolymorphicInvocationInspection
+             */
+            event(
+                new PersonExcelImported(
+                    auth()->user()->getAuthIdentifier(),
+                    storage_path("/app/public/$file->path$file->name.$file->extension")
+                )
+            );
+        }
     }
 }
