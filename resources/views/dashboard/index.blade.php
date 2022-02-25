@@ -76,11 +76,11 @@
     <div class="mx-auto container pb-16">
         <div id="myTabContent">
             <div
-                class="{{ $tab == 'summary' ? null : 'hidden' }} flex flex-col justify-center md:pt-4 px-4 gap-4"
+                class="{{ $tab == 'summary' ? null : 'hidden' }} flex flex-col justify-center md:pt-4 px-4 gap-2"
                 id="profile"
                 role="tabpanel"
                 aria-labelledby="profile-tab">
-                <div class="grid grid-cols-6 gap-4">
+                <div class="grid grid-cols-6 gap-2">
                     <div class="col-start-2">
                         @include('numerology.dark-category', ['numerology' => $numerology->getDayMaster(), 'palaces' => $palaces])
                     </div>
@@ -88,7 +88,7 @@
                     @include('numerology.category', ['numerology' => $numerology->getEducation(), 'palaces' => $palaces])
                     @include('numerology.category', ['numerology' => $numerology->getCulture(), 'palaces' => $palaces])
                 </div>
-                <div class="grid grid-cols-6 gap-4">
+                <div class="grid grid-cols-6 gap-2">
                     @include('numerology.category', ['numerology' => $numerology->getTalent(), 'palaces' => $palaces])
                     @include('numerology.category', ['numerology' => $numerology->getPartner(), 'palaces' => $palaces])
                     @include('numerology.category', ['numerology' => $numerology->getBelief(), 'palaces' => $palaces])
@@ -96,8 +96,8 @@
                     @include('numerology.category', ['numerology' => $numerology->getAmbition(), 'palaces' => $palaces])
                     @include('numerology.category', ['numerology' => $numerology->getBusiness(), 'palaces' => $palaces])
                 </div>
-                <div class="grid grid-cols-3 gap-4">
-                    <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-3 gap-2">
+                    <div class="grid grid-cols-2 gap-2">
                         @include('numerology.category', ['numerology' => $numerology->getSpiritual(), 'palaces' => $palaces])
                         @include('numerology.category', ['numerology' => $numerology->getEmotional(), 'palaces' => $palaces])
                         @include('numerology.category', ['numerology' => $numerology->getRelationship(), 'palaces' => $palaces])
@@ -110,7 +110,7 @@
                         @include('numerology.category-bigger', ['numerology' => $numerology->getPhysical(), 'palaces' => $palaces])
                         @include('numerology.category-without-year', ['numerology' => $numerology->getGoal(), 'palaces' => $palaces])
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 gap-2">
                         @include('numerology.category', ['numerology' => $numerology->getSocial(), 'palaces' => $palaces])
                         @include('numerology.category', ['numerology' => $numerology->getIntellectual(), 'palaces' => $palaces])
                         @include('numerology.category', ['numerology' => $numerology->getDaughter(), 'palaces' => $palaces])
