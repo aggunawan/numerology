@@ -1,54 +1,75 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="grid grid-cols-2">
-            <div class="w-full">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('Dashboard') }}
-                </h2>
-            </div>
-            <div class="w-full flex justify-between">
-                <div class="w-full flex flex-row items-center justify-end">
-                    <div class="ml-auto px-4">
-                        {{ $name }}
+    <div class="container mx-auto pt-2 flex flex-row justify-between">
+        <ul class="flex flex-wrap -mb-px" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+            <li class="" role="presentation">
+                <button
+                    class="{{ $tab == 'summary' ? 'active' : null }} flex flex-row py-2 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg hover:text-blue-600 hover:shadow-md hover:bg-white hover:rounded"
+                    id="profile-tab"
+                    data-tabs-target="#profile"
+                    type="button"
+                    role="tab"
+                    aria-controls="profile"
+                    aria-selected="{{ $tab == 'summary' ? 'true' : null }}">
+                    <svg class="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path></svg>
+                    <span class="font-bold">Summary</span>
+                </button>
+            </li>
+            <li class="" role="presentation">
+                <button
+                    class="{{ $tab == 'year' ? 'active' : null }} flex flex-row py-2 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg hover:text-blue-600 hover:shadow-md hover:bg-white hover:rounded"
+                    id="dashboard-tab"
+                    data-tabs-target="#dashboard"
+                    type="button"
+                    role="tab"
+                    aria-controls="dashboard"
+                    aria-selected="{{ $tab == 'year' ? 'true' : null }}">
+                    <svg class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span class="font-bold">Year</span>
+                </button>
+            </li>
+        </ul>
+        <div class="flex flex-row gap-2">
+            <div class="flex justify-between bg-white shadow rounded-lg px-4 py-2 items-center">
+                <div class="w-full flex flex-row items-center justify-end basis-1/4">
+                    <div class="ml-auto px-4 font-bold">
+                        DOB
                     </div>
                 </div>
+
+                <div class="flex flex-row flex-none px-4 gap-2">
+                    {{ $name }}
+                </div>
+
                 <div class="shrink-0">
                     @include('numerology.date-of-birth-modal')
                 </div>
             </div>
-        </div>
-    </x-slot>
 
-    <div class="container mx-auto">
-        <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
-            <ul class="flex flex-wrap -mb-px" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
-                <li class="mr-2" role="presentation">
-                    <button
-                        class="{{ $tab == 'summary' ? 'active' : null }} flex flex-row py-4 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
-                        id="profile-tab"
-                        data-tabs-target="#profile"
-                        type="button"
-                        role="tab"
-                        aria-controls="profile"
-                        aria-selected="{{ $tab == 'summary' ? 'true' : null }}">
-                        <svg class="mr-2 w-5 h-5 text-blue-600 dark:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path></svg>
-                        Summary
-                    </button>
-                </li>
-                <li class="mr-2" role="presentation">
-                    <button
-                        class="{{ $tab == 'year' ? 'active' : null }} flex flex-row py-4 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
-                        id="dashboard-tab"
-                        data-tabs-target="#dashboard"
-                        type="button"
-                        role="tab"
-                        aria-controls="dashboard"
-                        aria-selected="{{ $tab == 'year' ? 'true' : null }}">
-                        <svg class="mr-2 w-5 h-5 text-blue-600 dark:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-                        Year
-                    </button>
-                </li>
-            </ul>
+            <div class="bg-white shadow rounded-lg flex items-center px-2 hover:bg-blue-600 cursor-pointer text-blue-600 hover:text-white">
+                <x-dropdown>
+                    <x-slot name="trigger">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </x-slot>
+
+                    <x-slot name="content">
+                        @if(auth()->user()->hasAccess('platform.index'))
+                            <x-dropdown-link :href="route('platform.main')">
+                                {{ __('Admin Panel') }}
+                            </x-dropdown-link>
+                        @endif
+
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <x-dropdown-link :href="route('logout')"
+                                             onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('Log Out') }}
+                            </x-dropdown-link>
+                        </form>
+                    </x-slot>
+                </x-dropdown>
+            </div>
         </div>
     </div>
 

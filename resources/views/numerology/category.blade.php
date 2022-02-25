@@ -1,6 +1,6 @@
 <div class="p-2 w-full sm:max-w-md md:max-w-full mx-auto bg-gray-200 rounded-lg border shadow-md">
     <div class="flex justify-between">
-        <p class="text-sm font-extrabold uppercase px-4 mb-0">
+        <p class="text-sm font-extrabold uppercase px-2 mb-0">
             {{ $numerology->getName() }}
         </p>
         <div class="w-auto">

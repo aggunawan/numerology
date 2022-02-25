@@ -4,44 +4,20 @@ namespace App\Orchid\Resources;
 
 use App\Events\SharedPersonExcelImported;
 use App\Models\SharedPerson;
+use App\Traits\HasPersonInput;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Orchid\Attachment\Models\Attachment;
 use Orchid\Crud\Resource;
 use Orchid\Crud\ResourceRequest;
-use Orchid\Screen\Fields\DateTimer;
-use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\Quill;
-use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
 
 class SharedPersonResource extends Resource
 {
-    public static $model = SharedPerson::class;
+    use HasPersonInput;
 
-    public function fields(): array
-    {
-        return [
-            Input::make('name')
-                ->title('Name'),
-            DateTimer::make('birth_date')
-                ->title('Birth Date')
-                ->format('Y-m-d'),
-            Quill::make('note')
-                ->toolbar(["text", "color", "header", "list", "format"])
-                ->title('Note'),
-            Upload::make('excel')
-                ->title('Excel')
-                ->acceptedFiles(implode(',', [
-                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                    'application/vnd.ms-excel.sheet.binary.macroEnabled.12',
-                    'application/vnd.ms-excel',
-                    'application/vnd.ms-excel.sheet.macroEnabled.12',
-                ]))
-                ->maxFiles(1),
-        ];
-    }
+    public static $model = SharedPerson::class;
 
     public function rules(Model $model): array
     {
