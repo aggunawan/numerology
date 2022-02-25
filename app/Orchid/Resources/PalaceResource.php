@@ -41,8 +41,12 @@ class PalaceResource extends Resource
     {
         return [
             TD::make('code'),
-            TD::make('name')->render(function ($model) {
-                return "<span style=\"color: $model->background_color;\">$model->name</span>";
+            TD::make('name'),
+            TD::make('font_color', 'Font Color')->render(function ($model) {
+                return "<button style=\"background-color: $model->font_color; color: $model->font_color;\">$model->font_color</button>";
+            }),
+            TD::make('background_color', 'Background Color')->render(function ($model) {
+                return "<button style=\"background-color: $model->background_color; color: $model->background_color;\">$model->background_color</button>";
             }),
             TD::make('created_at', 'Date of creation')
                 ->render(function ($model) {
@@ -55,12 +59,14 @@ class PalaceResource extends Resource
     {
         return [
             Sight::make('code'),
-            Sight::make('name')->render(function ($model) {
-                return "<span style=\"color: $model->background_color;\">$model->name</span>";
-            }),
+            Sight::make('name'),
             Sight::make('description'),
-            Sight::make('font_color'),
-            Sight::make('background_color'),
+            Sight::make('font_color', 'Font Color')->render(function ($model) {
+                return "<button style=\"background-color: $model->font_color; color: $model->font_color;\">$model->font_color</button>";
+            }),
+            Sight::make('background_color', 'Background Color')->render(function ($model) {
+                return "<button style=\"background-color: $model->background_color; color: $model->background_color;\">$model->background_color</button>";
+            }),
             Sight::make('created_at', 'Date of creation')
                 ->render(function ($model) {
                     return $model->created_at->toDateTimeString();
