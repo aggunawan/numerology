@@ -1,7 +1,7 @@
 <x-app-layout>
-    <div class="container mx-auto pt-2 flex flex-row justify-between">
-        <ul class="flex flex-wrap -mb-px" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
-            <li class="" role="presentation">
+    <div class="container mx-auto pt-2 flex flex-col flex-col-reverse md:flex-row justify-between p-2">
+        <ul class="flex flex-wrap justify-between" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+            <li class="w-1/2 md:w-auto" role="presentation">
                 <button
                     class="{{ $tab == 'summary' ? 'active' : null }} flex flex-row py-2 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg hover:text-blue-600 hover:shadow-md hover:bg-white hover:rounded"
                     id="profile-tab"
@@ -14,7 +14,7 @@
                     <span class="font-bold">Summary</span>
                 </button>
             </li>
-            <li class="" role="presentation">
+            <li class="w-1/2 md:w-auto" role="presentation">
                 <button
                     class="{{ $tab == 'year' ? 'active' : null }} flex flex-row py-2 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg hover:text-blue-600 hover:shadow-md hover:bg-white hover:rounded"
                     id="dashboard-tab"
@@ -29,14 +29,14 @@
             </li>
         </ul>
         <div class="flex flex-row gap-2">
-            <div class="flex justify-between bg-white shadow rounded-lg px-4 py-2 items-center">
-                <div class="w-full flex flex-row items-center justify-end basis-1/4">
-                    <div class="ml-auto px-4 font-bold">
+            <div class="flex justify-between bg-white shadow rounded-lg px-4 py-2 items-center w-full">
+                <div class="w-full flex flex-row items-center basis-1/4">
+                    <div class="px-4 font-bold">
                         DOB
                     </div>
                 </div>
 
-                <div class="flex flex-row flex-none px-4 gap-2">
+                <div class="flex flex-row flex-none px-4 gap-2 hidden sm:block">
                     {{ $name }}
                 </div>
 
