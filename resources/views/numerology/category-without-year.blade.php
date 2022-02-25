@@ -1,5 +1,5 @@
 <div class="p-2 w-full sm:max-w-md md:max-w-full mx-auto bg-gray-800 rounded-lg border shadow-md text-white">
-    <div class="flex justify-center mb-2 py-2">
+    <div class="flex justify-center mb-2">
         <h3 class="font-bold text-2xl uppercase px-4" style="color: #98FF47;">
             {{ $numerology->getName() }}
         </h3>
