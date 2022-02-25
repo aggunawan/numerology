@@ -1186,6 +1186,15 @@ input:checked + .toggle-bg {
 .w-1\/2 {
   width: 50%;
 }
+.w-14 {
+  width: 3.5rem;
+}
+.w-40 {
+  width: 10rem;
+}
+.w-60 {
+  width: 15rem;
+}
 .min-w-full {
   min-width: 100%;
 }
@@ -1209,6 +1218,9 @@ input:checked + .toggle-bg {
 }
 .max-w-lg {
   max-width: 32rem;
+}
+.max-w-xs {
+  max-width: 20rem;
 }
 .flex-1 {
   flex: 1 1 0%;
