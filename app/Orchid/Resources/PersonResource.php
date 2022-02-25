@@ -4,49 +4,25 @@ namespace App\Orchid\Resources;
 
 use App\Events\PersonExcelImported;
 use App\Models\Person;
+use App\Traits\HasPersonInput;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Orchid\Attachment\Models\Attachment;
 use Orchid\Crud\Resource;
 use Orchid\Crud\ResourceRequest;
-use Orchid\Screen\Fields\DateTimer;
-use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\Quill;
-use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
 
 class PersonResource extends Resource
 {
+    use HasPersonInput;
+
     public static $model = Person::class;
 
     public function paginationQuery(ResourceRequest $request, Model $model): Builder
     {
         return $model->newQuery()->where('user_id', auth()->user()->getAuthIdentifier());
-    }
-
-    public function fields(): array
-    {
-        return [
-            Input::make('name')
-                ->title('Name'),
-            DateTimer::make('birth_date')
-                ->title('Birth Date')
-                ->format('Y-m-d'),
-            Quill::make('note')
-                ->toolbar(["text", "color", "header", "list", "format"])
-                ->title('Note'),
-            Upload::make('excel')
-                ->title('Excel')
-                ->acceptedFiles(implode(',', [
-                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                    'application/vnd.ms-excel.sheet.binary.macroEnabled.12',
-                    'application/vnd.ms-excel',
-                    'application/vnd.ms-excel.sheet.macroEnabled.12',
-                ]))
-                ->maxFiles(1),
-        ];
     }
 
     public function columns(): array
