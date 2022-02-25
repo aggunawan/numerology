@@ -24,7 +24,7 @@ class StaticNumerology
         'business' => ['Business', (5 * 9)],
         'intellectual' => ['Intellectual', (5 * 10)],
         'spiritual' => ['Spiritual', (5 * 11)],
-        'emotional' => ['Emotional', (5 * 12)],
+        'emotional' => ['Enjoyment', (5 * 12)],
         'social' => ['Social', (5 * 13)],
         'relationship' => ['Relationship', (5 * 14)],
         'financial' => ['Financial', (5 * 15)],

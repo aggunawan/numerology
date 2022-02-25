@@ -274,7 +274,7 @@ class StaticNumerologyTest extends TestCase
 
     public function testGetEmotional()
     {
-        self::assertSame('Emotional', $this->past->getEmotional()->getName());
+        self::assertSame('Enjoyment', $this->past->getEmotional()->getName());
         self::assertSame(2002, $this->past->getEmotional()->getYear());
         self::assertSame(2082, $this->future->getEmotional()->getYear());
 
