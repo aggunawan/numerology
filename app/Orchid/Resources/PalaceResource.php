@@ -40,7 +40,7 @@ class PalaceResource extends Resource
     public function columns(): array
     {
         return [
-            TD::make('id'),
+            TD::make('code'),
             TD::make('name')->render(function ($model) {
                 return "<span style=\"color: $model->background_color;\">$model->name</span>";
             }),
@@ -54,7 +54,7 @@ class PalaceResource extends Resource
     public function legend(): array
     {
         return [
-            Sight::make('id'),
+            Sight::make('code'),
             Sight::make('name')->render(function ($model) {
                 return "<span style=\"color: $model->background_color;\">$model->name</span>";
             }),
