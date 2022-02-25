@@ -1204,6 +1204,12 @@ input:checked + .toggle-bg {
 .max-w-6xl {
   max-width: 72rem;
 }
+.max-w-md {
+  max-width: 28rem;
+}
+.max-w-lg {
+  max-width: 32rem;
+}
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -1305,11 +1311,17 @@ input:checked + .toggle-bg {
 .flex-col {
   flex-direction: column;
 }
+.flex-col-reverse {
+  flex-direction: column-reverse;
+}
 .flex-wrap {
   flex-wrap: wrap;
 }
 .flex-nowrap {
   flex-wrap: nowrap;
+}
+.items-end {
+  align-items: flex-end;
 }
 .items-center {
   align-items: center;
@@ -2109,6 +2121,10 @@ input:checked + .toggle-bg {
 }
 @media (min-width: 640px) {
 
+  .sm\:col-start-2 {
+    grid-column-start: 2;
+  }
+
   .sm\:-my-px {
     margin-top: -1px;
     margin-bottom: -1px;
@@ -2134,6 +2150,10 @@ input:checked + .toggle-bg {
     display: flex;
   }
 
+  .sm\:grid {
+    display: grid;
+  }
+
   .sm\:hidden {
     display: none;
   }
@@ -2148,6 +2168,22 @@ input:checked + .toggle-bg {
 
   .sm\:flex-1 {
     flex: 1 1 0%;
+  }
+
+  .sm\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sm\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sm\:flex-row {
+    flex-direction: row;
   }
 
   .sm\:items-center {
@@ -2168,6 +2204,10 @@ input:checked + .toggle-bg {
 
   .sm\:rounded-lg {
     border-radius: 0.5rem;
+  }
+
+  .sm\:p-0 {
+    padding: 0px;
   }
 
   .sm\:px-6 {
@@ -2201,12 +2241,24 @@ input:checked + .toggle-bg {
     left: 0px;
   }
 
+  .md\:col-start-2 {
+    grid-column-start: 2;
+  }
+
+  .md\:grid {
+    display: grid;
+  }
+
   .md\:h-full {
     height: 100%;
   }
 
   .md\:h-auto {
     height: auto;
+  }
+
+  .md\:w-auto {
+    width: auto;
   }
 
   .md\:max-w-full {
@@ -2217,12 +2269,36 @@ input:checked + .toggle-bg {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .md\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .md\:flex-row {
+    flex-direction: row;
+  }
+
+  .md\:items-end {
+    align-items: flex-end;
+  }
+
+  .md\:justify-end {
+    justify-content: flex-end;
+  }
+
   .md\:border-t-0 {
     border-top-width: 0px;
   }
 
   .md\:border-l {
     border-left-width: 1px;
+  }
+
+  .md\:p-0 {
+    padding: 0px;
   }
 
   .md\:pt-4 {
