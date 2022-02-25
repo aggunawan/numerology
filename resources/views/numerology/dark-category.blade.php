@@ -1,10 +1,10 @@
 <div class="p-2 w-full sm:max-w-md md:max-w-full mx-auto bg-gray-800 rounded-lg border shadow-md text-white">
     <div class="flex justify-between">
-        <p class="text-sm font-extrabold uppercase px-2 mb-0">
+        <p class="text-xs font-extrabold uppercase px-2 mb-0">
             {{ $numerology->getName() }}
         </p>
-        <div class="w-auto">
-            <strong>{{ $numerology->getYear() }}</strong>
+        <div class="w-auto text-xs font-bold">
+            <small>{{ $numerology->getYear() }}</small>
         </div>
     </div>
 
