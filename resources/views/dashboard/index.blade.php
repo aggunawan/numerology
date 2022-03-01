@@ -175,7 +175,9 @@
                                             Year
                                         </th>
                                         @foreach(range(1, 31) as $date)
-                                            <th scope="col" class="p-1 text-sm font-bold tracking-wider text-left text-gray-700 uppercase">
+                                            <th
+                                                scope="col"
+                                                class="text-center p-1 text-sm font-bold tracking-wider text-left text-gray-700 uppercase {{ $date % 2 == 0 ? 'bg-gray-200' : 'bg-gray-300' }}">
                                                 {{ $date }}
                                             </th>
                                         @endforeach
@@ -191,7 +193,7 @@
                                                 @foreach($cell[0] as $i => $item)
                                                     <td
                                                         colspan="{{ $item }}"
-                                                        class="text-sm font-medium text-gray-900 whitespace-nowrap">
+                                                        class="text-sm font-medium text-gray-900 whitespace-nowrap py-0.5">
                                                         @php
                                                             $traitCode = $year_numerology->{$cell[1]}()->getTraitCodes()[$i];
                                                             $trait = $year_numerology->{$cell[1]}()->getTraits()[$traitCode];
@@ -200,7 +202,7 @@
                                                             'trait' => $palaces[$traitCode][0] ?? $trait,
                                                             'backgroundColor' => $palaces[$traitCode][1] ?? '#e5e7eb',
                                                             'color' => $palaces[$traitCode][2] ?? null,
-                                                            'buttonClass' => 'p-3'
+                                                            'buttonClass' => 'p-0.5 rounded-sm'
                                                         ])
                                                     </td>
                                                 @endforeach
