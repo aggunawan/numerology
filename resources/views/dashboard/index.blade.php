@@ -1,6 +1,6 @@
 <x-app-layout>
-    <div class="container mx-auto pt-2 flex flex-col flex-col-reverse md:flex-row justify-between p-2">
-        <ul class="flex flex-wrap justify-between" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+    <div class="container mx-auto pt-2 flex flex-col flex-col-reverse md:grid md:grid-cols-6 p-2">
+        <ul class="flex flex-row" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
             <li class="w-1/2 md:w-auto" role="presentation">
                 <button
                     class="{{ $tab == 'summary' ? 'active' : null }} flex flex-row py-2 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg hover:text-blue-600 hover:shadow-md hover:bg-white hover:rounded font-bold"
@@ -46,8 +46,9 @@
                 </button>
             </li>
         </ul>
-        <div class="flex flex-row gap-2">
-            <div class="flex justify-between bg-white shadow rounded-lg px-4 py-2 items-center w-full">
+
+        <div class="flex flex-row grow col-span-4 justify-center">
+            <div class="flex justify-between bg-white shadow rounded-lg px-4 py-2 items-center">
                 <div class="w-full flex flex-row items-center basis-1/4">
                     <div class="px-4 font-bold">
                         DOB
@@ -62,7 +63,9 @@
                     @include('numerology.date-of-birth-modal')
                 </div>
             </div>
+        </div>
 
+        <div class="flex flex-row justify-end">
             <div class="bg-white shadow rounded-lg flex items-center px-2 hover:bg-blue-600 cursor-pointer text-blue-600 hover:text-white">
                 <x-dropdown>
                     <x-slot name="trigger">

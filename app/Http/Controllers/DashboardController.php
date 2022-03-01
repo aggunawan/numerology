@@ -7,6 +7,7 @@ use App\Models\Palace;
 use App\Models\Person;
 use App\Models\SharedPerson;
 use App\Models\User;
+use App\Objects\BirthDate;
 use App\Objects\Person as PersonObject;
 use App\Objects\StaticNumerology;
 use Carbon\Carbon;
@@ -18,20 +19,21 @@ class DashboardController extends Controller
     {
         $person = $this->getBirthDate();
         $currentYear = $request->get('year', now()->format('Y'));
+        $birthDate = $person->getBirthDate();
 
         return view('dashboard.index', [
             'numerology' => new StaticNumerology(
-                $person->getBirthDate()->getDay(),
-                $person->getBirthDate()->getMonth(),
-                $person->getBirthDate()->getYear()
+                $birthDate->getDay(),
+                $birthDate->getMonth(),
+                $birthDate->getYear()
             ),
             'year_numerology' => new StaticNumerology(
-                $person->getBirthDate()->getDay(),
-                $person->getBirthDate()->getMonth(),
-                $person->getBirthDate()->getYear(),
+                $birthDate->getDay(),
+                $birthDate->getMonth(),
+                $birthDate->getYear(),
                 $currentYear
             ),
-            'name' => $person->getName(),
+            'name' => $this->gerPersonName($birthDate, $person),
             'months' => $this->getMonths(Carbon::parse("$currentYear-01-01")->isLeapYear()),
             'tab' => $request->get('tab', 'summary'),
             'currentYear' => $currentYear,
@@ -42,10 +44,7 @@ class DashboardController extends Controller
 
     private function getBirthDate(): PersonObject
     {
-        $list = (new BirthDateList())
-            ->newQuery()
-            ->where('user_id', auth()->user()->getAuthIdentifier())
-            ->first();
+        $list = $this->getBirthDateList();
 
         $names = [];
         $day = 0;
@@ -142,4 +141,36 @@ class DashboardController extends Controller
             ->pluck('name', 'id')
             ->toArray();
     }
+
+    private function gerPersonName(BirthDate $birthDate, PersonObject $person): string
+    {
+        if (count(explode(',', $person->getName())) > 1) {
+            $list = $this->getBirthDateList();
+            $names = [];
+
+            if ($list instanceof BirthDateList) {
+                foreach ($list->content as $item) {
+                    $names[] = $item['name'] . ' (' . Carbon::parse($item['date'])->diffInYears() . ')';
+                }
+                return implode(', ', $names);
+            }
+        }
+
+        $carbon = Carbon::parse("{$birthDate->getYear()}-{$birthDate->getMonth()}-{$birthDate->getDay()}");
+        $age = null;
+
+        if ($carbon->diffInYears() == 1) $age = "(1 year)";
+        if ($carbon->diffInYears() > 1) $age = "({$carbon->diffInYears()} years)";
+
+        return "{$person->getName()} {$carbon->format('d-m-Y')} $age";
+    }
+
+    private function getBirthDateList()
+    {
+        return (new BirthDateList())
+            ->newQuery()
+            ->where('user_id', auth()->user()->getAuthIdentifier())
+            ->first();
+    }
+
 }
