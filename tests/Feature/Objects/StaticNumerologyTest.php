@@ -118,7 +118,7 @@ class StaticNumerologyTest extends TestCase
             [
                 12 => 'The Hanged Man',
                 8 => 'Strength',
-                10 => 'Wheel of Fortune',
+                15 => 'The Devil',
             ],
             $this->past->getSpiritual()->getTraits()
         );
@@ -126,7 +126,7 @@ class StaticNumerologyTest extends TestCase
             [
                 18 => 'The Moon',
                 0 => 'The Fool',
-                15 => 'The Devil',
+                16 => 'The Tower',
             ],
             $this->future->getSpiritual()->getTraits()
         );
@@ -326,7 +326,7 @@ class StaticNumerologyTest extends TestCase
             [
                 10 => 'Wheel of Fortune',
                 13 => 'Death',
-                9 => 'The Hermit',
+                14 => 'Temperance',
             ],
             $this->past->getTalent()->getTraits()
         );
@@ -334,7 +334,7 @@ class StaticNumerologyTest extends TestCase
             [
                 15 => 'The Devil',
                 8 => 'Strength',
-                13 => 'Death',
+                14 => 'Temperance',
             ],
             $this->future->getTalent()->getTraits()
         );
