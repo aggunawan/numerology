@@ -20,13 +20,14 @@ class DashboardController extends Controller
         $person = $this->getBirthDate();
         $currentYear = $request->get('year', now()->format('Y'));
         $birthDate = $person->getBirthDate();
+        $numerology = new StaticNumerology(
+            $birthDate->getDay(),
+            $birthDate->getMonth(),
+            $birthDate->getYear()
+        );
 
         return view('dashboard.index', [
-            'numerology' => new StaticNumerology(
-                $birthDate->getDay(),
-                $birthDate->getMonth(),
-                $birthDate->getYear()
-            ),
+            'numerology' => $numerology,
             'year_numerology' => new StaticNumerology(
                 $birthDate->getDay(),
                 $birthDate->getMonth(),
@@ -39,6 +40,7 @@ class DashboardController extends Controller
             'currentYear' => $currentYear,
             'people' => $this->getPeople(),
             'palaces' => $this->getPalaces(),
+            'highlightedYear' => $this->getHighlightedYear($numerology),
         ]);
     }
 
@@ -171,6 +173,49 @@ class DashboardController extends Controller
             ->newQuery()
             ->where('user_id', auth()->user()->getAuthIdentifier())
             ->first();
+    }
+
+    private function getHighlightedYear(StaticNumerology $numerology): int
+    {
+        $methods = [
+            'getDayMaster',
+            'getCulture',
+            'getEducation',
+            'getMindset',
+            'getBelief',
+            'getCareer',
+            'getPartner',
+            'getAmbition',
+            'getTalent',
+            'getBusiness',
+            'getIntellectual',
+            'getSpiritual',
+            'getEmotional',
+            'getSocial',
+            'getRelationship',
+            'getFinancial',
+            'getSon',
+            'getDaughter',
+            'getCharacter',
+            'getHealth',
+            'getPhysical',
+        ];
+
+        $years = collect();
+
+        foreach ($methods as $method) {
+            $years->push($numerology->{$method}()->getYear());
+        }
+
+        $years = $years->sort();
+        $current = date('Y');
+
+        foreach ($years as $i => $year) {
+            if ($i == 0 && $year > $current) return $year;
+            if ($i != 0 && $year > $current) return $years[$i - 1];
+        }
+
+        return $years->last();
     }
 
 }
