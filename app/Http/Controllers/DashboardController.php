@@ -117,11 +117,16 @@ class DashboardController extends Controller
         $result = [];
         $palaces = (new Palace())
             ->newQuery()
-            ->select(['code', 'name', 'font_color', 'background_color'])
+            ->select(['code', 'name', 'font_color', 'background_color', 'description'])
             ->get();
 
         foreach ($palaces as $palace) {
-            $result[$palace->code] = [$palace->name, $palace->background_color, $palace->font_color];
+            $result[$palace->code] = [
+                $palace->name,
+                $palace->background_color,
+                $palace->font_color,
+                $palace->description,
+            ];
         }
 
         return $result;
