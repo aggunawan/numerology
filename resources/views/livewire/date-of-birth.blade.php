@@ -17,7 +17,9 @@
                     <button
                         type="submit"
                         wire:click="addFromList"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">Save</button>
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">
+                        Save & Upload
+                    </button>
                 </div>
             @endif
         </div>
@@ -65,7 +67,9 @@
                 <button
                     type="submit"
                     wire:click="storeList"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">Save</button>
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">
+                    Save & Upload
+                </button>
             </div>
         </div>
 
