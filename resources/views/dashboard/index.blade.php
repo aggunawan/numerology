@@ -1,6 +1,6 @@
 <x-app-layout>
-    <div class="container mx-auto pt-2 flex flex-col flex-col-reverse md:flex-row justify-between p-2">
-        <ul class="flex flex-wrap justify-between" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+    <div class="container mx-auto pt-2 flex flex-col flex-col-reverse md:grid md:grid-cols-6 p-2">
+        <ul class="flex flex-row" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
             <li class="w-1/2 md:w-auto" role="presentation">
                 <button
                     class="{{ $tab == 'summary' ? 'active' : null }} flex flex-row py-2 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg hover:text-blue-600 hover:shadow-md hover:bg-white hover:rounded font-bold"
@@ -46,8 +46,9 @@
                 </button>
             </li>
         </ul>
-        <div class="flex flex-row gap-2">
-            <div class="flex justify-between bg-white shadow rounded-lg px-4 py-2 items-center w-full">
+
+        <div class="flex flex-row grow col-span-4 justify-center">
+            <div class="flex justify-between bg-white shadow rounded-lg px-4 py-2 items-center">
                 <div class="w-full flex flex-row items-center basis-1/4">
                     <div class="px-4 font-bold">
                         DOB
@@ -62,7 +63,9 @@
                     @include('numerology.date-of-birth-modal')
                 </div>
             </div>
+        </div>
 
+        <div class="flex flex-row justify-end">
             <div class="bg-white shadow rounded-lg flex items-center px-2 hover:bg-blue-600 cursor-pointer text-blue-600 hover:text-white">
                 <x-dropdown>
                     <x-slot name="trigger">
@@ -100,41 +103,41 @@
                 aria-labelledby="profile-tab">
                 <div class="grid grid-cols-6 gap-2">
                     <div class="col-start-2">
-                        @include('numerology.dark-category', ['numerology' => $numerology->getDayMaster(), 'palaces' => $palaces])
+                        @include('numerology.dark-category', ['numerology' => $numerology->getDayMaster(), 'palaces' => $palaces, 'year' => $highlightedYear])
                     </div>
-                    @include('numerology.category', ['numerology' => $numerology->getMindset(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getEducation(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getCulture(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getMindset(), 'palaces' => $palaces, 'year' => $highlightedYear])
+                    @include('numerology.category', ['numerology' => $numerology->getEducation(), 'palaces' => $palaces, 'year' => $highlightedYear])
+                    @include('numerology.category', ['numerology' => $numerology->getCulture(), 'palaces' => $palaces, 'year' => $highlightedYear])
                 </div>
                 <div class="grid grid-cols-6 gap-2">
-                    @include('numerology.category', ['numerology' => $numerology->getTalent(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getPartner(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getBelief(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getCareer(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getAmbition(), 'palaces' => $palaces])
-                    @include('numerology.category', ['numerology' => $numerology->getBusiness(), 'palaces' => $palaces])
+                    @include('numerology.category', ['numerology' => $numerology->getTalent(), 'palaces' => $palaces, 'year' => $highlightedYear])
+                    @include('numerology.category', ['numerology' => $numerology->getPartner(), 'palaces' => $palaces, 'year' => $highlightedYear])
+                    @include('numerology.category', ['numerology' => $numerology->getBelief(), 'palaces' => $palaces, 'year' => $highlightedYear])
+                    @include('numerology.category', ['numerology' => $numerology->getCareer(), 'palaces' => $palaces, 'year' => $highlightedYear])
+                    @include('numerology.category', ['numerology' => $numerology->getAmbition(), 'palaces' => $palaces, 'year' => $highlightedYear])
+                    @include('numerology.category', ['numerology' => $numerology->getBusiness(), 'palaces' => $palaces, 'year' => $highlightedYear])
                 </div>
                 <div class="grid grid-cols-3 gap-2">
                     <div class="grid grid-cols-2 gap-2">
-                        @include('numerology.category', ['numerology' => $numerology->getSpiritual(), 'palaces' => $palaces])
-                        @include('numerology.category', ['numerology' => $numerology->getEmotional(), 'palaces' => $palaces])
-                        @include('numerology.category', ['numerology' => $numerology->getRelationship(), 'palaces' => $palaces])
-                        @include('numerology.category', ['numerology' => $numerology->getSon(), 'palaces' => $palaces])
+                        @include('numerology.category', ['numerology' => $numerology->getSpiritual(), 'palaces' => $palaces, 'year' => $highlightedYear])
+                        @include('numerology.category', ['numerology' => $numerology->getEmotional(), 'palaces' => $palaces, 'year' => $highlightedYear])
+                        @include('numerology.category', ['numerology' => $numerology->getRelationship(), 'palaces' => $palaces, 'year' => $highlightedYear])
+                        @include('numerology.category', ['numerology' => $numerology->getSon(), 'palaces' => $palaces, 'year' => $highlightedYear])
                         <div class="col-span-2">
-                            @include('numerology.category-with-hidden', ['numerology' => $numerology->getCharacter(), 'palaces' => $palaces])
+                            @include('numerology.category-with-hidden', ['numerology' => $numerology->getCharacter(), 'palaces' => $palaces, 'year' => $highlightedYear])
                         </div>
                     </div>
                     <div class="flex flex-col justify-between px-20 gap-2">
-                        @include('numerology.category-bigger', ['numerology' => $numerology->getPhysical(), 'palaces' => $palaces])
+                        @include('numerology.category-bigger', ['numerology' => $numerology->getPhysical(), 'palaces' => $palaces, 'year' => $highlightedYear])
                         @include('numerology.category-without-year', ['numerology' => $numerology->getGoal(), 'palaces' => $palaces])
                     </div>
                     <div class="grid grid-cols-2 gap-2">
-                        @include('numerology.category', ['numerology' => $numerology->getSocial(), 'palaces' => $palaces])
-                        @include('numerology.category', ['numerology' => $numerology->getIntellectual(), 'palaces' => $palaces])
-                        @include('numerology.category', ['numerology' => $numerology->getDaughter(), 'palaces' => $palaces])
-                        @include('numerology.category', ['numerology' => $numerology->getFinancial(), 'palaces' => $palaces])
+                        @include('numerology.category', ['numerology' => $numerology->getSocial(), 'palaces' => $palaces, 'year' => $highlightedYear])
+                        @include('numerology.category', ['numerology' => $numerology->getIntellectual(), 'palaces' => $palaces, 'year' => $highlightedYear])
+                        @include('numerology.category', ['numerology' => $numerology->getDaughter(), 'palaces' => $palaces, 'year' => $highlightedYear])
+                        @include('numerology.category', ['numerology' => $numerology->getFinancial(), 'palaces' => $palaces, 'year' => $highlightedYear])
                         <div class="col-span-2">
-                            @include('numerology.category-with-hidden', ['numerology' => $numerology->getHealth(), 'palaces' => $palaces, 'swap' => true])
+                            @include('numerology.category-with-hidden', ['numerology' => $numerology->getHealth(), 'palaces' => $palaces, 'swap' => true, 'year' => $highlightedYear])
                         </div>
                     </div>
                 </div>
@@ -218,4 +221,12 @@
             </div>
         </div>
     </div>
+
+    @foreach($palaces as $palace)
+        @include('numerology.palace-modal', [
+            'name' => \Illuminate\Support\Str::camel($palace[0]),
+            'title' => $palace[0],
+            'description' => $palace[3]
+        ])
+    @endforeach
 </x-app-layout>

@@ -7,6 +7,7 @@ use App\Models\Palace;
 use App\Models\Person;
 use App\Models\SharedPerson;
 use App\Models\User;
+use App\Objects\BirthDate;
 use App\Objects\Person as PersonObject;
 use App\Objects\StaticNumerology;
 use Carbon\Carbon;
@@ -18,34 +19,34 @@ class DashboardController extends Controller
     {
         $person = $this->getBirthDate();
         $currentYear = $request->get('year', now()->format('Y'));
+        $birthDate = $person->getBirthDate();
+        $numerology = new StaticNumerology(
+            $birthDate->getDay(),
+            $birthDate->getMonth(),
+            $birthDate->getYear()
+        );
 
         return view('dashboard.index', [
-            'numerology' => new StaticNumerology(
-                $person->getBirthDate()->getDay(),
-                $person->getBirthDate()->getMonth(),
-                $person->getBirthDate()->getYear()
-            ),
+            'numerology' => $numerology,
             'year_numerology' => new StaticNumerology(
-                $person->getBirthDate()->getDay(),
-                $person->getBirthDate()->getMonth(),
-                $person->getBirthDate()->getYear(),
+                $birthDate->getDay(),
+                $birthDate->getMonth(),
+                $birthDate->getYear(),
                 $currentYear
             ),
-            'name' => $person->getName(),
+            'name' => $this->gerPersonName($birthDate, $person),
             'months' => $this->getMonths(Carbon::parse("$currentYear-01-01")->isLeapYear()),
             'tab' => $request->get('tab', 'summary'),
             'currentYear' => $currentYear,
             'people' => $this->getPeople(),
             'palaces' => $this->getPalaces(),
+            'highlightedYear' => $this->getHighlightedYear($numerology),
         ]);
     }
 
     private function getBirthDate(): PersonObject
     {
-        $list = (new BirthDateList())
-            ->newQuery()
-            ->where('user_id', auth()->user()->getAuthIdentifier())
-            ->first();
+        $list = $this->getBirthDateList();
 
         $names = [];
         $day = 0;
@@ -116,11 +117,16 @@ class DashboardController extends Controller
         $result = [];
         $palaces = (new Palace())
             ->newQuery()
-            ->select(['code', 'name', 'font_color', 'background_color'])
+            ->select(['code', 'name', 'font_color', 'background_color', 'description'])
             ->get();
 
         foreach ($palaces as $palace) {
-            $result[$palace->code] = [$palace->name, $palace->background_color, $palace->font_color];
+            $result[$palace->code] = [
+                $palace->name,
+                $palace->background_color,
+                $palace->font_color,
+                $palace->description,
+            ];
         }
 
         return $result;
@@ -142,4 +148,79 @@ class DashboardController extends Controller
             ->pluck('name', 'id')
             ->toArray();
     }
+
+    private function gerPersonName(BirthDate $birthDate, PersonObject $person): string
+    {
+        if (count(explode(',', $person->getName())) > 1) {
+            $list = $this->getBirthDateList();
+            $names = [];
+
+            if ($list instanceof BirthDateList) {
+                foreach ($list->content as $item) {
+                    $names[] = $item['name'] . ' (' . Carbon::parse($item['date'])->diffInYears() . ')';
+                }
+                return implode(', ', $names);
+            }
+        }
+
+        $carbon = Carbon::parse("{$birthDate->getYear()}-{$birthDate->getMonth()}-{$birthDate->getDay()}");
+        $age = null;
+
+        if ($carbon->diffInYears() == 1) $age = "(1 year)";
+        if ($carbon->diffInYears() > 1) $age = "({$carbon->diffInYears()} years)";
+
+        return "{$person->getName()} {$carbon->format('d-m-Y')} $age";
+    }
+
+    private function getBirthDateList()
+    {
+        return (new BirthDateList())
+            ->newQuery()
+            ->where('user_id', auth()->user()->getAuthIdentifier())
+            ->first();
+    }
+
+    private function getHighlightedYear(StaticNumerology $numerology): int
+    {
+        $methods = [
+            'getDayMaster',
+            'getCulture',
+            'getEducation',
+            'getMindset',
+            'getBelief',
+            'getCareer',
+            'getPartner',
+            'getAmbition',
+            'getTalent',
+            'getBusiness',
+            'getIntellectual',
+            'getSpiritual',
+            'getEmotional',
+            'getSocial',
+            'getRelationship',
+            'getFinancial',
+            'getSon',
+            'getDaughter',
+            'getCharacter',
+            'getHealth',
+            'getPhysical',
+        ];
+
+        $years = collect();
+
+        foreach ($methods as $method) {
+            $years->push($numerology->{$method}()->getYear());
+        }
+
+        $years = $years->sort();
+        $current = date('Y');
+
+        foreach ($years as $i => $year) {
+            if ($i == 0 && $year > $current) return $year;
+            if ($i != 0 && $year > $current) return $years[$i - 1];
+        }
+
+        return $years->last();
+    }
+
 }
