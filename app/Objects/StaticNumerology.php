@@ -266,7 +266,11 @@ class StaticNumerology
 
         $this->categories['spiritual']->addTrait(($dayMaster[0] +  $mindset[0] + $belief[0]) % 22);
         $this->categories['spiritual']->addTrait(($dayMaster[1] + $mindset[1] + $belief[1]) % 22);
-        $this->categories['spiritual']->addTrait(($belief[0] + $mindset[0]) % 22);
+
+        $spiritualThree = $this->categories['spiritual']->getTraitCodes()[0] + $belief[1] + $belief[2];
+        if ($this->currentYear != 0) $spiritualThree = $belief[0] + $mindset[0];
+
+        $this->categories['spiritual']->addTrait(($spiritualThree) % 22);
 
         $this->categories['spiritual_pristine']->addTrait(
             ($dayMasterPristine[0] +  $mindsetPristine[0] + $beliefPristine[0]) % 22
@@ -274,7 +278,9 @@ class StaticNumerology
         $this->categories['spiritual_pristine']->addTrait(
             ($dayMasterPristine[1] + $mindsetPristine[1] + $beliefPristine[1]) % 22
         );
-        $this->categories['spiritual_pristine']->addTrait(($beliefPristine[0] + $mindsetPristine[0]) % 22);
+        $this->categories['spiritual_pristine']->addTrait(
+            ($this->categories['spiritual_pristine']->getTraitCodes()[0] + $beliefPristine[1] + $beliefPristine[2]) % 22
+        );
     }
 
     protected function setCareerTrait(): void
