@@ -22,13 +22,12 @@ class PersonResource extends Resource
 
     public function paginationQuery(ResourceRequest $request, Model $model): Builder
     {
-        return $model->newQuery()->where('user_id', auth()->user()->getAuthIdentifier());
+        return $model->newQuery()->orderBy('name')->where('user_id', auth()->user()->getAuthIdentifier());
     }
 
     public function columns(): array
     {
         return [
-            TD::make('id'),
             TD::make('name'),
             TD::make('birth_date', 'Birth Date')
                 ->render(function ($model) {

@@ -5,6 +5,7 @@ namespace App\Orchid\Resources;
 use App\Events\SharedPersonExcelImported;
 use App\Models\SharedPerson;
 use App\Traits\HasPersonInput;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Orchid\Attachment\Models\Attachment;
@@ -18,6 +19,11 @@ class SharedPersonResource extends Resource
     use HasPersonInput;
 
     public static $model = SharedPerson::class;
+
+    public function paginationQuery(ResourceRequest $request, Model $model): Builder
+    {
+        return $model->newQuery()->orderBy('name');
+    }
 
     public function rules(Model $model): array
     {
@@ -63,7 +69,6 @@ class SharedPersonResource extends Resource
     public function columns(): array
     {
         return [
-            TD::make('id'),
             TD::make('name'),
             TD::make('birth_date', 'Birth Date')
                 ->render(function ($model) {

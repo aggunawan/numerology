@@ -146,7 +146,7 @@
                 aria-labelledby="dashboard-tab">
                 <div class="p-4 w-full sm:max-w-md md:max-w-full mx-auto bg-white rounded-lg border shadow-md">
                     <div class="flex justify-between">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Monthly Numerology</h5>
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Monthly Insights</h5>
                         <form action="{{ route('dashboard.index') }}" method="GET">
                             <div class="max-w-sm grid grid-cols-3 gap-4">
                                 <input type="hidden" name="tab" value="year">
