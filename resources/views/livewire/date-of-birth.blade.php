@@ -1,6 +1,6 @@
 <div class="relative bg-white rounded-lg shadow">
-    <div class="p-6 grid grid-cols-12 gap-2">
-        <div class="flex flex-col {{ $this->has_list ? 'col-span-3' : 'hidden' }} gap-2">
+    <div class="flex flex-col-reverse p-4 lg:p-6 sm:grid sm:grid-cols-12 gap-2">
+        <div class="w-full flex flex-col {{ $this->has_list ? 'col-span-3' : 'hidden' }} gap-2">
             @if($this->has_list)
                 <div class="flex flex-col gap-2">
                     <label for="people" class="block text-sm font-medium text-gray-900">People Database</label>
@@ -24,7 +24,7 @@
             @endif
         </div>
 
-        <div class="flex flex-col {{ $this->has_list ? 'col-span-5' : 'col-span-6' }} gap-2">
+        <div class="w-full flex flex-col {{ $this->has_list ? 'col-span-5' : 'col-span-6' }} gap-2">
             <div class="flex flex-col gap-2">
                 <label for="name" class="block text-sm font-medium text-gray-900">Name</label>
                 <input
@@ -73,7 +73,7 @@
             </div>
         </div>
 
-        <div class="flex flex-col {{ $this->has_list ? 'col-span-4' : 'col-span-6' }} gap-2">
+        <div class="w-full flex flex-col {{ $this->has_list ? 'col-span-4' : 'col-span-6' }} gap-2">
             <p class="mb-0">DOB List</p>
             @if($this->list)
                 @foreach($this->list->content as $i => $content)
