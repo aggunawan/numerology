@@ -6,6 +6,7 @@ use App\Models\Palace;
 use Illuminate\Database\Eloquent\Model;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
 
@@ -18,7 +19,7 @@ class PalaceResource extends Resource
         return [
             Input::make('code')->required()->type('number')->title('Code'),
             Input::make('name')->required()->title('Name'),
-            Input::make('description')->required()->title('Description'),
+            TextArea::make('description')->rows(5)->required()->title('Description'),
             Input::make('font_color')->required()->title('Font Color (Hexadecimal)'),
             Input::make('background_color')->required()->title('Background Color (Hexadecimal)'),
         ];
