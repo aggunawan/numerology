@@ -2219,6 +2219,10 @@ input:checked + .toggle-bg {
     border-radius: 0.5rem;
   }
 
+  .sm\:p-0 {
+    padding: 0px;
+  }
+
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -2296,6 +2300,10 @@ input:checked + .toggle-bg {
 
   .md\:border-l {
     border-left-width: 1px;
+  }
+
+  .md\:p-0 {
+    padding: 0px;
   }
 
   .md\:pt-4 {
