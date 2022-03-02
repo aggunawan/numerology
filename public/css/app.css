@@ -1426,6 +1426,9 @@ input:checked + .toggle-bg {
 .border-0 {
   border-width: 0px;
 }
+.border-8 {
+  border-width: 8px;
+}
 .border-l-4 {
   border-left-width: 4px;
 }
@@ -1471,6 +1474,10 @@ input:checked + .toggle-bg {
 .border-blue-700 {
   --tw-border-opacity: 1;
   border-color: rgb(26 86 219 / var(--tw-border-opacity));
+}
+.border-lime-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(163 230 53 / var(--tw-border-opacity));
 }
 .bg-white {
   --tw-bg-opacity: 1;
