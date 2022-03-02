@@ -32,7 +32,7 @@ class PalaceResource extends Resource
         return [
             'code' => ['required', 'numeric', 'min:0', 'max:255', $unique],
             'name' => ['required', 'string', 'min:1', 'max:255'],
-            'description' => ['required', 'string', 'min:1', 'max:500'],
+            'description' => ['required', 'string', 'min:1', 'max:1000'],
             'font_color' => ['required', 'string', 'min:1', 'max:7', 'starts_with:#'],
             'background_color' => ['required', 'string', 'min:1', 'max:7', 'starts_with:#'],
         ];
