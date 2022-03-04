@@ -19,6 +19,8 @@ class DateOfBirth extends Component
     public $selectedMonth = 'January';
     public $selectedYear = null;
 
+    protected $listeners = ['selectedPersonUpdated' => 'updateSelectedPerson'];
+
     public function mount()
     {
         $this->selectedYear = date('Y');
@@ -48,6 +50,11 @@ class DateOfBirth extends Component
     public function render()
     {
         return view('livewire.date-of-birth');
+    }
+
+    public function updateSelectedPerson($data)
+    {
+        $this->selectedPerson = $data['value'];
     }
 
     public function getPersonProperty()
@@ -109,6 +116,7 @@ class DateOfBirth extends Component
 
         if ($person instanceof Person || $person instanceof SharedPerson) {
             $this->updateList($person->name, $person->birth_date->toDateString());
+            $this->emit('clearSelectedPerson');
         }
     }
 
