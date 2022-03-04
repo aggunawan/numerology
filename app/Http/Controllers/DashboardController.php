@@ -38,7 +38,7 @@ class DashboardController extends Controller
             'months' => $this->getMonths(Carbon::parse("$currentYear-01-01")->isLeapYear()),
             'tab' => $request->get('tab', 'summary'),
             'currentYear' => $currentYear,
-            'people' => $this->getPeople(),
+            'people' => [],
             'palaces' => $this->getPalaces(),
             'highlightedYear' => $this->getHighlightedYear($numerology),
         ]);
@@ -97,21 +97,6 @@ class DashboardController extends Controller
         ];
     }
 
-    private function getPeople(): array
-    {
-        $list = [];
-
-        foreach ($this->getPrivatePersonList() as $i => $person) {
-            $list["person-$i"] = $person;
-        }
-
-        foreach ($this->getSharedPersonList() as $i => $person) {
-            $list["shared_person-$i"] = $person;
-        }
-
-        return $list;
-    }
-
     private function getPalaces(): array
     {
         $result = [];
@@ -130,23 +115,6 @@ class DashboardController extends Controller
         }
 
         return $result;
-    }
-
-    private function getPrivatePersonList(): array
-    {
-        return (new Person())
-            ->newQuery()
-            ->where('user_id', auth()->user()->getAuthIdentifier())
-            ->pluck('name', 'id')
-            ->toArray();
-    }
-
-    private function getSharedPersonList(): array
-    {
-        return (new SharedPerson())
-            ->newQuery()
-            ->pluck('name', 'id')
-            ->toArray();
     }
 
     private function gerPersonName(BirthDate $birthDate, PersonObject $person): string

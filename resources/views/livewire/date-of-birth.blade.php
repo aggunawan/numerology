@@ -4,16 +4,11 @@
             @if($this->has_list)
                 <div class="flex flex-col gap-2">
                     <label for="people" class="block text-sm font-medium text-gray-900">People Database</label>
-                    <select
-                        wire:model="selectedPerson"
-                        id="people"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full">
-                        <option value="">Select</option>
-                        @foreach($people as $id => $person)
-                            <option value="{{ $id }}">{{ $person }}</option>
-                        @endforeach
-                    </select>
-
+                    <livewire:person-select
+                        name="selectedPerson"
+                        placeholder="Select"
+                        class="p-2 rounded border w-full appearance-none p-3 hover:bg-gray-100 text-gray-900 cursor-pointer text-sm bg-indigo-600 text-white font-medium bg-white text-gray-600 absolute top-0 left-0 mt-12 w-full z-10 bg-gray-400 font-bolder"
+                        :searchable="true"></livewire:person-select>
                     <button
                         type="submit"
                         wire:click="addFromList"
