@@ -31,6 +31,7 @@ trait HasPersonInput
                         'application/vnd.ms-excel.sheet.binary.macroEnabled.12',
                         'application/vnd.ms-excel',
                         'application/vnd.ms-excel.sheet.macroEnabled.12',
+                        'text/csv',
                     ]))
                     ->maxFiles(1)
             );
