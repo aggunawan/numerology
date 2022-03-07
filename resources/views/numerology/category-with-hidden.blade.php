@@ -13,10 +13,14 @@
     <div class="w-full grid grid-cols-2 gap-2">
         <ul class="w-full grid gap-2">
             @foreach($numerology->getTraitCodes() as $i => $trait)
+                @php
+                    $palace = isset($palaces[$trait]) ? $palaces[$trait][0] : $numerology->getTraits()[$trait];
+                @endphp
                 @if($i == (isset($swap) ? 0 : 2) || $i == (isset($swap) ? 1 : 3))
                     <li>
                         @include((isset($swap) ? 'numerology.category.trait' : 'numerology.category.hidden-trait'), [
-                            'trait' => isset($palaces[$trait]) ? $palaces[$trait][0] : $numerology->getTraits()[$trait],
+                            'trait' => $palace,
+                            'modalName' => \Illuminate\Support\Str::camel($numerology->getName() . $palace . ($i + 1)),
                             'color' => isset($palaces[$trait]) ? $palaces[$trait][2] : null,
                             'backgroundColor' => isset($palaces[$trait]) ? $palaces[$trait][1] : null,
                         ])
@@ -26,10 +30,14 @@
         </ul>
         <ul class="w-full grid gap-2">
             @foreach($numerology->getTraitCodes() as $i => $trait)
+                @php
+                    $palace = isset($palaces[$trait]) ? $palaces[$trait][0] : $numerology->getTraits()[$trait];
+                @endphp
                 @if($i == (isset($swap) ? 2 : 0) || $i == (isset($swap) ? 3 : 1))
                     <li>
                         @include((isset($swap) ? 'numerology.category.hidden-trait' : 'numerology.category.trait'), [
-                            'trait' => isset($palaces[$trait]) ? $palaces[$trait][0] : $numerology->getTraits()[$trait],
+                            'trait' => $palace,
+                            'modalName' => \Illuminate\Support\Str::camel($numerology->getName() . $palace . ($i + 1)),
                             'color' => isset($palaces[$trait]) ? $palaces[$trait][2] : null,
                             'backgroundColor' => isset($palaces[$trait]) ? $palaces[$trait][1] : null,
                         ])
