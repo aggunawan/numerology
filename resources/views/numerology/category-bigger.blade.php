@@ -9,10 +9,14 @@
     </div>
 
     <ul class="w-full grid gap-1">
-        @foreach($numerology->getTraitCodes() as $trait)
+        @foreach($numerology->getTraitCodes() as $i => $trait)
+            @php
+                $palace = isset($palaces[$trait]) ? $palaces[$trait][0] : $numerology->getTraits()[$trait];
+            @endphp
             <li>
                 @include('numerology.category.trait', [
-                    'trait' => isset($palaces[$trait]) ? $palaces[$trait][0] : $numerology->getTraits()[$trait],
+                    'trait' => $palace,
+                    'modalName' => \Illuminate\Support\Str::camel($numerology->getName() . $palace . ($i + 1)),
                     'color' => isset($palaces[$trait]) ? $palaces[$trait][2] : null,
                     'backgroundColor' => isset($palaces[$trait]) ? $palaces[$trait][1] : null,
                     'buttonClass' => 'p-1',
