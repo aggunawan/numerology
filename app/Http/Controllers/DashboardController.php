@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BirthDateList;
 use App\Models\Palace;
-use App\Models\Person;
-use App\Models\SharedPerson;
+use App\Models\PalaceDescription;
 use App\Models\User;
 use App\Objects\BirthDate;
 use App\Objects\Person as PersonObject;
@@ -41,6 +40,7 @@ class DashboardController extends Controller
             'people' => [],
             'palaces' => $this->getPalaces(),
             'highlightedYear' => $this->getHighlightedYear($numerology),
+            'descriptions' => $this->getDescriptions(),
         ]);
     }
 
@@ -191,4 +191,45 @@ class DashboardController extends Controller
         return $years->last();
     }
 
+    private function getDescriptions(): array
+    {
+        $descriptions = [];
+        $palaceDescriptions = (new PalaceDescription())
+            ->newQuery()
+            ->with([
+                'palace' => function ($query) {
+                    return $query->select('id', 'name');
+                }
+            ])
+            ->get();
+
+        foreach ($palaceDescriptions as $palaceDescription) {
+            $descriptions[$palaceDescription->palace->name] = [
+                'day_master' => $palaceDescription->day_master ?? [],
+                'culture' => $palaceDescription->culture ?? [],
+                'education' => $palaceDescription->education ?? [],
+                'mindset' => $palaceDescription->mindset ?? [],
+                'belief' => $palaceDescription->belief ?? [],
+                'career' => $palaceDescription->career ?? [],
+                'partner' => $palaceDescription->partner ?? [],
+                'ambition' => $palaceDescription->ambition ?? [],
+                'talent' => $palaceDescription->talent ?? [],
+                'business' => $palaceDescription->business ?? [],
+                'intellectual' => $palaceDescription->intellectual ?? [],
+                'spiritual' => $palaceDescription->spiritual ?? [],
+                'emotional' => $palaceDescription->emotional ?? [],
+                'social' => $palaceDescription->social ?? [],
+                'relationship' => $palaceDescription->relationship ?? [],
+                'financial' => $palaceDescription->financial ?? [],
+                'son' => $palaceDescription->son ?? [],
+                'daughter' => $palaceDescription->daughter ?? [],
+                'character' => $palaceDescription->character ?? [],
+                'health' => $palaceDescription->health ?? [],
+                'physical' => $palaceDescription->physical ?? [],
+                'goal' => $palaceDescription->goal ?? [],
+            ];
+        }
+
+        return $descriptions;
+    }
 }
