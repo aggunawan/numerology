@@ -4,6 +4,7 @@ namespace App\Orchid\Resources;
 
 use App\Events\SharedPersonExcelImported;
 use App\Models\SharedPerson;
+use App\Orchid\Filters\NameFilter;
 use App\Traits\HasPersonInput;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -104,7 +105,9 @@ class SharedPersonResource extends Resource
 
     public function filters(): array
     {
-        return [];
+        return [
+            NameFilter::class,
+        ];
     }
 
     public static function permission(): ?string
