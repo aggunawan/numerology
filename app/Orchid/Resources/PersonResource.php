@@ -4,6 +4,7 @@ namespace App\Orchid\Resources;
 
 use App\Events\PersonExcelImported;
 use App\Models\Person;
+use App\Orchid\Filters\NameFilter;
 use App\Traits\HasPersonInput;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,13 @@ class PersonResource extends Resource
     use HasPersonInput;
 
     public static $model = Person::class;
+
+    public function filters(): array
+    {
+        return [
+            NameFilter::class,
+        ];
+    }
 
     public function paginationQuery(ResourceRequest $request, Model $model): Builder
     {
@@ -59,11 +67,6 @@ class PersonResource extends Resource
                     return $model->updated_at->toDateTimeString();
                 }),
         ];
-    }
-
-    public function filters(): array
-    {
-        return [];
     }
 
     public function rules(Model $model): array
