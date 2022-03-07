@@ -205,31 +205,44 @@ class DashboardController extends Controller
 
         foreach ($palaceDescriptions as $palaceDescription) {
             $descriptions[$palaceDescription->palace->name] = [
-                'day_master' => $palaceDescription->day_master ?? [],
-                'culture' => $palaceDescription->culture ?? [],
-                'education' => $palaceDescription->education ?? [],
-                'mindset' => $palaceDescription->mindset ?? [],
-                'belief' => $palaceDescription->belief ?? [],
-                'career' => $palaceDescription->career ?? [],
-                'partner' => $palaceDescription->partner ?? [],
-                'ambition' => $palaceDescription->ambition ?? [],
-                'talent' => $palaceDescription->talent ?? [],
-                'business' => $palaceDescription->business ?? [],
-                'intellectual' => $palaceDescription->intellectual ?? [],
-                'spiritual' => $palaceDescription->spiritual ?? [],
-                'emotional' => $palaceDescription->emotional ?? [],
-                'social' => $palaceDescription->social ?? [],
-                'relationship' => $palaceDescription->relationship ?? [],
-                'financial' => $palaceDescription->financial ?? [],
-                'son' => $palaceDescription->son ?? [],
-                'daughter' => $palaceDescription->daughter ?? [],
-                'character' => $palaceDescription->character ?? [],
-                'health' => $palaceDescription->health ?? [],
-                'physical' => $palaceDescription->physical ?? [],
-                'goal' => $palaceDescription->goal ?? [],
+                'day_master' => $this->evaluateDescription($palaceDescription->day_master),
+                'culture' => $this->evaluateDescription($palaceDescription->culture),
+                'education' => $this->evaluateDescription($palaceDescription->education),
+                'mindset' => $this->evaluateDescription($palaceDescription->mindset),
+                'belief' => $this->evaluateDescription($palaceDescription->belief),
+                'career' => $this->evaluateDescription($palaceDescription->career),
+                'partner' => $this->evaluateDescription($palaceDescription->partner),
+                'ambition' => $this->evaluateDescription($palaceDescription->ambition),
+                'talent' => $this->evaluateDescription($palaceDescription->talent),
+                'business' => $this->evaluateDescription($palaceDescription->business),
+                'intellectual' => $this->evaluateDescription($palaceDescription->intellectual),
+                'spiritual' => $this->evaluateDescription($palaceDescription->spiritual),
+                'emotional' => $this->evaluateDescription($palaceDescription->emotional),
+                'social' => $this->evaluateDescription($palaceDescription->social),
+                'relationship' => $this->evaluateDescription($palaceDescription->relationship),
+                'financial' => $this->evaluateDescription($palaceDescription->financial),
+                'son' => $this->evaluateDescription($palaceDescription->son),
+                'daughter' => $this->evaluateDescription($palaceDescription->daughter),
+                'character' => $this->evaluateDescription($palaceDescription->character),
+                'health' => $this->evaluateDescription($palaceDescription->health),
+                'physical' => $this->evaluateDescription($palaceDescription->physical),
+                'goal' => $this->evaluateDescription($palaceDescription->goal),
             ];
         }
 
         return $descriptions;
+    }
+
+    private function evaluateDescription(array $data = null): array
+    {
+        $values = [];
+
+        if (is_array($data)) {
+            foreach ($data as $datum) {
+                $values[count($values) + 1] = $datum;
+            }
+        }
+
+        return $values;
     }
 }
