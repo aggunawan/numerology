@@ -56,6 +56,10 @@ class PalaceDescriptionResource extends Resource
         return ['palace'];
     }
 
+    public static function permission(): ?string
+    {
+        return 'palace_descriptions';
+    }
 
     public function columns(): array
     {
