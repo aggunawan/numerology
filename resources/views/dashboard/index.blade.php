@@ -158,16 +158,4 @@
             </div>
         </div>
     </div>
-
-    @foreach($descriptions as $key => $val)
-        @foreach($val as $palace => $palaceDescriptions)
-            @foreach($palaceDescriptions as $i => $description)
-                @include('numerology.palace-modal', [
-                    'name' => \Illuminate\Support\Str::camel("$palace$key$i"),
-                    'title' => \Illuminate\Support\Str::title($key),
-                    'description' => $description['Description'],
-                ])
-            @endforeach
-        @endforeach
-    @endforeach
 </x-app-layout>
