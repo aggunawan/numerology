@@ -78,6 +78,21 @@
                         @include('numerology.category-without-year', ['numerology' => $numerology->getGoal(), 'palaces' => $palaces])
                     </div>
                 </div>
+                <div class="lg:grid lg:grid-cols-6 gap-2 hidden pt-6">
+                    <div class="w-full col-span-4 col-start-2">
+                        <p class="text-xl mb-4">Remarks</p>
+                        <div class="grid gap-2">
+                            @foreach($descriptions as $title => $description)
+                                @if($description)
+                                    @include('numerology.remark', [
+                                            'title' => $title,
+                                            'palaceDescription' => $description,
+                                        ])
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             </div>
             <div
                 class="{{ $tab == 'year' ? null : 'hidden' }} flex flex-col xl:flex-row justify-center md:pt-4 px-4 gap-4"

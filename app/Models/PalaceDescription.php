@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
 
+/**
+ * @property Palace $palace
+ */
 class PalaceDescription extends Model
 {
     use HasFactory, AsSource, Filterable;
