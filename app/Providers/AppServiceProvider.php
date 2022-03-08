@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $permissions = ItemPermission::group('Main')
             ->addPermission('palaces', 'Palace')
+            ->addPermission('palace_descriptions', 'Palace Description')
             ->addPermission('shared_people', 'Shared People');
 
         $dashboard->registerPermissions($permissions);
