@@ -11,6 +11,7 @@ use App\Objects\Person as PersonObject;
 use App\Objects\StaticNumerology;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
@@ -40,7 +41,7 @@ class DashboardController extends Controller
             'people' => [],
             'palaces' => $this->getPalaces(),
             'highlightedYear' => $this->getHighlightedYear($numerology),
-            'descriptions' => $this->getDescriptions(),
+            'descriptions' => $this->getDescriptions($numerology),
         ]);
     }
 
@@ -191,58 +192,64 @@ class DashboardController extends Controller
         return $years->last();
     }
 
-    private function getDescriptions(): array
+    private function getDescriptions(StaticNumerology $staticNumerology): array
     {
         $descriptions = [];
         $palaceDescriptions = (new PalaceDescription())
             ->newQuery()
             ->with([
                 'palace' => function ($query) {
-                    return $query->select('id', 'name');
+                    return $query->select('id', 'name', 'code');
                 }
             ])
             ->get();
 
-        foreach ($palaceDescriptions as $palaceDescription) {
-            $descriptions[$palaceDescription->palace->name] = [
-                'day_master' => $this->evaluateDescription($palaceDescription->day_master),
-                'culture' => $this->evaluateDescription($palaceDescription->culture),
-                'education' => $this->evaluateDescription($palaceDescription->education),
-                'mindset' => $this->evaluateDescription($palaceDescription->mindset),
-                'belief' => $this->evaluateDescription($palaceDescription->belief),
-                'career' => $this->evaluateDescription($palaceDescription->career),
-                'partner' => $this->evaluateDescription($palaceDescription->partner),
-                'ambition' => $this->evaluateDescription($palaceDescription->ambition),
-                'talent' => $this->evaluateDescription($palaceDescription->talent),
-                'business' => $this->evaluateDescription($palaceDescription->business),
-                'intellectual' => $this->evaluateDescription($palaceDescription->intellectual),
-                'spiritual' => $this->evaluateDescription($palaceDescription->spiritual),
-                'emotional' => $this->evaluateDescription($palaceDescription->emotional),
-                'social' => $this->evaluateDescription($palaceDescription->social),
-                'relationship' => $this->evaluateDescription($palaceDescription->relationship),
-                'financial' => $this->evaluateDescription($palaceDescription->financial),
-                'son' => $this->evaluateDescription($palaceDescription->son),
-                'daughter' => $this->evaluateDescription($palaceDescription->daughter),
-                'character' => $this->evaluateDescription($palaceDescription->character),
-                'health' => $this->evaluateDescription($palaceDescription->health),
-                'physical' => $this->evaluateDescription($palaceDescription->physical),
-                'goal' => $this->evaluateDescription($palaceDescription->goal),
-            ];
+        foreach ($this->getRemarkOrder() as $item) {
+            $row = 1;
+            $descriptions[$item] = [];
+            $attr = $item == 'Enjoyment' ? 'Emotional' : $item;
+            foreach ($staticNumerology->{Str::camel("get$attr")}()->getTraitCodes() as $code) {
+                $palaceDescription = $palaceDescriptions->where('palace.code', $code)->first();
+                if ($palaceDescription instanceof PalaceDescription) {
+                    if (isset($palaceDescription->{Str::snake($attr)}[$row]['Description'])) {
+                        $descriptions[$item][] = [
+                            'title' => $palaceDescription->palace->name,
+                            'description' => $palaceDescription->{Str::snake($attr)}[$row]['Description']
+                        ];
+                    }
+                }
+                $row ++;
+            }
         }
 
         return $descriptions;
     }
 
-    private function evaluateDescription(array $data = null): array
+    private function getRemarkOrder(): array
     {
-        $values = [];
-
-        if (is_array($data)) {
-            foreach ($data as $datum) {
-                $values[count($values) + 1] = $datum;
-            }
-        }
-
-        return $values;
+        return [
+            'Day Master',
+            'Mindset',
+            'Education',
+            'Culture',
+            'Talent',
+            'Partner',
+            'Belief',
+            'Career',
+            'Ambition',
+            'Business',
+            'Spiritual',
+            'Enjoyment',
+            'Social',
+            'Intellectual',
+            'Relationship',
+            'Son',
+            'Daughter',
+            'Financial',
+            'Character',
+            'Health',
+            'Physical',
+            'Goal',
+        ];
     }
 }
