@@ -82,8 +82,14 @@
                     <div class="w-full col-span-4 col-start-2">
                         <p class="text-xl mb-4">Remarks</p>
                         <div class="grid gap-2">
-                            @include('numerology.remark')
-                            @include('numerology.remark')
+                            @foreach($descriptions as $title => $description)
+                                @if($description)
+                                    @include('numerology.remark', [
+                                            'title' => $title,
+                                            'palaceDescription' => $description,
+                                        ])
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>
