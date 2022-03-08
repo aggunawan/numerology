@@ -159,11 +159,13 @@
         </div>
     </div>
 
-    @foreach($palaces as $palace)
-        @include('numerology.palace-modal', [
-            'name' => \Illuminate\Support\Str::camel($palace[0]),
-            'title' => $palace[0],
-            'description' => $palace[3]
-        ])
+    @foreach($descriptions as $palace => $items)
+        @foreach($items as $i => $item)
+            @include('numerology.palace-modal', [
+                'name' => \Illuminate\Support\Str::camel($palace . $item['title'] . ($i + 1)),
+                'title' => $item['title'],
+                'description' => $item['description']
+            ])
+        @endforeach
     @endforeach
 </x-app-layout>
