@@ -12,10 +12,8 @@ class PalaceDescriptionImport implements ToCollection, WithHeadingRow
 {
     public function collection(Collection $collection)
     {
-        $palaces = $this->getPalaces($collection->pluck('code')->toArray());
-
         foreach ($collection as $item) {
-            $palace = $palaces->where('code', $item->get('code'))->first();
+            $palace = $this->getPalace($item['code']);
             if ($palace instanceof Palace) {
                 if ($palace->palaceDescription instanceof PalaceDescription) {
                     $this->updatePalaceDescription($palace->palaceDescription, $item);
@@ -26,13 +24,13 @@ class PalaceDescriptionImport implements ToCollection, WithHeadingRow
         }
     }
 
-    private function getPalaces(array $codes)
+    private function getPalace(int $code)
     {
         return (new Palace())
             ->newQuery()
-            ->whereBetween('code', $codes)
+            ->where('code', $code)
             ->with(['palaceDescription'])
-            ->get();
+            ->first();
     }
 
     private function updatePalaceDescription(PalaceDescription $palaceDescription, Collection $collection)
