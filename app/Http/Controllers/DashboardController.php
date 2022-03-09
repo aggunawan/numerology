@@ -217,6 +217,8 @@ class DashboardController extends Controller
                             'description' => $palaceDescription->{Str::snake($attr)}[$row]['Description']
                         ];
                     }
+                } else {
+                    $descriptions[$item][] = [];
                 }
                 $row ++;
             }
