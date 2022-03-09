@@ -103,7 +103,7 @@ class DashboardController extends Controller
         $result = [];
         $palaces = (new Palace())
             ->newQuery()
-            ->select(['code', 'name', 'font_color', 'background_color', 'description'])
+            ->select(['code', 'name', 'font_color', 'background_color'])
             ->get();
 
         foreach ($palaces as $palace) {
@@ -217,6 +217,8 @@ class DashboardController extends Controller
                             'description' => $palaceDescription->{Str::snake($attr)}[$row]['Description']
                         ];
                     }
+                } else {
+                    $descriptions[$item][] = [];
                 }
                 $row ++;
             }
