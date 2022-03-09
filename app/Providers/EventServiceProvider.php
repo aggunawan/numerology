@@ -25,6 +25,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\SharedPersonExcelImported' => [
             'App\Listeners\ProcessSharedPersonExcel',
         ],
+        'App\Events\PalaceDescriptionExcelImported' => [
+            'App\Listeners\ProcessPalaceDescriptionExcel',
+        ],
     ];
 
     /**
