@@ -13,12 +13,14 @@ class PalaceDescriptionImport implements ToCollection, WithHeadingRow
     public function collection(Collection $collection)
     {
         foreach ($collection as $item) {
-            $palace = $this->getPalace($item['code']);
-            if ($palace instanceof Palace) {
-                if ($palace->palaceDescription instanceof PalaceDescription) {
-                    $this->updatePalaceDescription($palace->palaceDescription, $item);
-                } else {
-                    $this->createPalaceDescription($palace, $item);
+            if ($item['code']) {
+                $palace = $this->getPalace($item['code']);
+                if ($palace instanceof Palace) {
+                    if ($palace->palaceDescription instanceof PalaceDescription) {
+                        $this->updatePalaceDescription($palace->palaceDescription, $item);
+                    } else {
+                        $this->createPalaceDescription($palace, $item);
+                    }
                 }
             }
         }
