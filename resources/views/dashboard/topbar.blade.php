@@ -1,5 +1,5 @@
 <div class="container mx-auto pt-2 flex flex-col flex-col-reverse lg:grid lg:grid-cols-6 p-2">
-    @include('dashboard.tab')
+    @include('dashboard.tab', ['hideYear' => $hideYear])
 
     <div class="flex flex-row col-span-4 justify-center gap-2">
         @include('dashboard.dob')

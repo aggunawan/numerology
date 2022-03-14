@@ -22,25 +22,27 @@
             Summary
         </button>
     </li>
-    <li class="w-1/2 lg:w-auto" role="presentation">
-        <button
-            class="{{ $tab == 'year' ? 'active' : null }} flex flex-row py-2 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg hover:text-blue-600 hover:shadow-md hover:bg-white hover:rounded font-bold"
-            id="dashboard-tab"
-            data-tabs-target="#dashboard"
-            type="button"
-            role="tab"
-            aria-controls="dashboard"
-            aria-selected="{{ $tab == 'year' ? 'true' : null }}">
-            <svg
+    @if(!$hideYear)
+        <li class="w-1/2 lg:w-auto" role="presentation">
+            <button
+                class="{{ $tab == 'year' ? 'active' : null }} flex flex-row py-2 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg hover:text-blue-600 hover:shadow-md hover:bg-white hover:rounded font-bold"
+                id="dashboard-tab"
                 data-tabs-target="#dashboard"
+                type="button"
+                role="tab"
                 aria-controls="dashboard"
-                aria-selected="{{ $tab == 'year' ? 'true' : null }}"
-                class="mr-2 w-5 h-5"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-            </svg>
-            Year
-        </button>
-    </li>
+                aria-selected="{{ $tab == 'year' ? 'true' : null }}">
+                <svg
+                    data-tabs-target="#dashboard"
+                    aria-controls="dashboard"
+                    aria-selected="{{ $tab == 'year' ? 'true' : null }}"
+                    class="mr-2 w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                </svg>
+                Year
+            </button>
+        </li>
+    @endif
 </ul>

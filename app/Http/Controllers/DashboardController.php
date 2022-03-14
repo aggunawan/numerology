@@ -28,12 +28,7 @@ class DashboardController extends Controller
 
         return view('dashboard.index', [
             'numerology' => $numerology,
-            'year_numerology' => new StaticNumerology(
-                $birthDate->getDay(),
-                $birthDate->getMonth(),
-                $birthDate->getYear(),
-                $currentYear
-            ),
+            'year_numerology' => $this->getYearlyStaticNumerology($birthDate, $currentYear),
             'name' => $this->gerPersonName($birthDate, $person),
             'months' => $this->getMonths(Carbon::parse("$currentYear-01-01")->isLeapYear()),
             'tab' => $request->get('tab', 'summary'),
@@ -253,5 +248,30 @@ class DashboardController extends Controller
             'Physical',
             'Goal',
         ];
+    }
+
+    private function getYearlyStaticNumerology(BirthDate $birthDate, string $currentYear): ?StaticNumerology
+    {
+        $user = auth()->user();
+
+        if ($user instanceof User) {
+            if (
+                $user->getRoles()->whereIn('slug', [
+                    User::PRACTITIONER,
+                    User::TRAINER,
+                    User::ADMIN,
+                    User::SUPER_ADMIN,
+                ])->count() > 0
+            ) {
+                return new StaticNumerology(
+                    $birthDate->getDay(),
+                    $birthDate->getMonth(),
+                    $birthDate->getYear(),
+                    $currentYear
+                );
+            }
+        }
+
+        return null;
     }
 }
