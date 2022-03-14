@@ -24,7 +24,7 @@ class DateOfBirth extends Component
     public function mount()
     {
         $this->selectedYear = date('Y');
-        $this->selectedMonth = date('F');
+        $this->selectedMonth = date('M');
         $this->selectedDate = date('d');
     }
 
