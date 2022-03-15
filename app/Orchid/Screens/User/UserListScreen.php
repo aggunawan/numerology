@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types=1);
-
 namespace App\Orchid\Screens\User;
 
 use App\Orchid\Layouts\User\UserEditLayout;
@@ -17,13 +14,9 @@ use Orchid\Support\Facades\Toast;
 
 class UserListScreen extends Screen
 {
-    /**
-     * Query data.
-     *
-     * @return array
-     */
     public function query(): iterable
     {
+        /** @noinspection PhpUndefinedMethodInspection */
         return [
             'users' => User::with('roles')
                 ->filters()
@@ -33,29 +26,16 @@ class UserListScreen extends Screen
         ];
     }
 
-    /**
-     * Display header name.
-     *
-     * @return string|null
-     */
     public function name(): ?string
     {
         return 'User';
     }
 
-    /**
-     * Display header description.
-     *
-     * @return string|null
-     */
     public function description(): ?string
     {
         return 'All registered users';
     }
 
-    /**
-     * @return iterable|null
-     */
     public function permission(): ?iterable
     {
         return [
@@ -63,11 +43,6 @@ class UserListScreen extends Screen
         ];
     }
 
-    /**
-     * Button commands.
-     *
-     * @return \Orchid\Screen\Action[]
-     */
     public function commandBar(): iterable
     {
         return [
@@ -77,11 +52,6 @@ class UserListScreen extends Screen
         ];
     }
 
-    /**
-     * Views.
-     *
-     * @return string[]|\Orchid\Screen\Layout[]
-     */
     public function layout(): iterable
     {
         return [
@@ -93,11 +63,7 @@ class UserListScreen extends Screen
         ];
     }
 
-    /**
-     * @param User $user
-     *
-     * @return array
-     */
+    /** @noinspection PhpUnused */
     public function asyncGetUser(User $user): iterable
     {
         return [
@@ -105,10 +71,6 @@ class UserListScreen extends Screen
         ];
     }
 
-    /**
-     * @param Request $request
-     * @param User    $user
-     */
     public function saveUser(Request $request, User $user): void
     {
         $request->validate([
@@ -123,9 +85,7 @@ class UserListScreen extends Screen
         Toast::info(__('User was saved.'));
     }
 
-    /**
-     * @param Request $request
-     */
+    /** @noinspection PhpUndefinedMethodInspection */
     public function remove(Request $request): void
     {
         User::findOrFail($request->get('id'))->delete();

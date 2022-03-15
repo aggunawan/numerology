@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types=1);
-
 namespace App\Orchid\Layouts\User;
 
 use Orchid\Platform\Models\User;
@@ -16,14 +13,8 @@ use Orchid\Screen\TD;
 
 class UserListLayout extends Table
 {
-    /**
-     * @var string
-     */
     public $target = 'users';
 
-    /**
-     * @return TD[]
-     */
     public function columns(): array
     {
         return [
@@ -40,6 +31,7 @@ class UserListLayout extends Table
                 ->cantHide()
                 ->filter(Input::make())
                 ->render(function (User $user) {
+                    /** @noinspection PhpUndefinedFieldInspection */
                     return ModalToggle::make($user->email)
                         ->modal('asyncEditUserModal')
                         ->modalTitle($user->presenter()->title())
@@ -52,13 +44,29 @@ class UserListLayout extends Table
             TD::make('updated_at', __('Last edit'))
                 ->sort()
                 ->render(function (User $user) {
+                    /** @noinspection PhpUndefinedFieldInspection */
                     return $user->updated_at->toDateTimeString();
+                }),
+
+            TD::make('valid_at', __('Valid Date'))
+                ->sort()
+                ->render(function (User $user) {
+                    /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+                    return $user->valid_date;
+                }),
+
+            TD::make('expired_at', __('Expired Date'))
+                ->sort()
+                ->render(function (User $user) {
+                    /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+                    return $user->expired_date;
                 }),
 
             TD::make(__('Actions'))
                 ->align(TD::ALIGN_CENTER)
                 ->width('100px')
                 ->render(function (User $user) {
+                    /** @noinspection PhpUndefinedFieldInspection */
                     return DropDown::make()
                         ->icon('options-vertical')
                         ->list([
