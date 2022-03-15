@@ -29,7 +29,11 @@ class UserEditLayout extends Rows
                 ->format('Y-m-d'),
 
             DateRange::make('user.expiration_date')
-                ->title('Expiration Date'),
+                ->title('Expiration Date')
+                ->value([
+                    'start' => $this->query->get('user')->valid_date ?? null,
+                    'end' => $this->query->get('user')->expired_date ?? null,
+                ]),
         ];
     }
 }

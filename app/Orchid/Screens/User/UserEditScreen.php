@@ -151,6 +151,10 @@ class UserEditScreen extends Screen
 
         /** @noinspection PhpPossiblePolymorphicInvocationInspection */
         $user->birth_date = $userData['birth_date'];
+        /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+        $user->valid_date = $userData['expiration_date']['start'];
+        /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+        $user->expired_date = $userData['expiration_date']['end'];
         $user->save();
 
         $user->replaceRoles($request->input('user.roles'));
