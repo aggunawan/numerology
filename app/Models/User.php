@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Orchid\Platform\Models\User as Authenticatable;
 
 /**
  * @property string $name
  * @property string $birth_date
+ * @property Carbon $valid_date
+ * @property Carbon $expired_date
  */
 class User extends Authenticatable
 {
@@ -22,6 +25,8 @@ class User extends Authenticatable
         'password',
         'permissions',
         'birth_date',
+        'valid_date',
+        'expired_date',
     ];
 
     protected $hidden = [
@@ -33,6 +38,8 @@ class User extends Authenticatable
     protected $casts = [
         'permissions'          => 'array',
         'email_verified_at'    => 'datetime',
+        'valid_date'           => 'date',
+        'expired_date'         => 'date',
     ];
 
     protected $allowedFilters = [
