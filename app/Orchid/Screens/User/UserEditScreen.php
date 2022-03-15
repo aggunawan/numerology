@@ -1,19 +1,17 @@
 <?php
-
-declare(strict_types=1);
-
 namespace App\Orchid\Screens\User;
 
 use App\Orchid\Layouts\Role\RolePermissionLayout;
 use App\Orchid\Layouts\User\UserEditLayout;
 use App\Orchid\Layouts\User\UserPasswordLayout;
 use App\Orchid\Layouts\User\UserRoleLayout;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Orchid\Access\UserSwitch;
 use Orchid\Platform\Models\User;
-use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 use Orchid\Support\Color;
@@ -22,18 +20,8 @@ use Orchid\Support\Facades\Toast;
 
 class UserEditScreen extends Screen
 {
-    /**
-     * @var User
-     */
     public $user;
 
-    /**
-     * Query data.
-     *
-     * @param User $user
-     *
-     * @return array
-     */
     public function query(User $user): iterable
     {
         $user->load(['roles']);
@@ -44,29 +32,16 @@ class UserEditScreen extends Screen
         ];
     }
 
-    /**
-     * Display header name.
-     *
-     * @return string|null
-     */
     public function name(): ?string
     {
         return $this->user->exists ? 'Edit User' : 'Create User';
     }
 
-    /**
-     * Display header description.
-     *
-     * @return string|null
-     */
     public function description(): ?string
     {
         return 'Details such as name, email and password';
     }
 
-    /**
-     * @return iterable|null
-     */
     public function permission(): ?iterable
     {
         return [
@@ -74,13 +49,9 @@ class UserEditScreen extends Screen
         ];
     }
 
-    /**
-     * Button commands.
-     *
-     * @return Action[]
-     */
     public function commandBar(): iterable
     {
+        /** @noinspection PhpUndefinedFieldInspection */
         return [
             Button::make(__('Impersonate user'))
                 ->icon('login')
@@ -100,9 +71,6 @@ class UserEditScreen extends Screen
         ];
     }
 
-    /**
-     * @return \Orchid\Screen\Layout[]
-     */
     public function layout(): iterable
     {
         return [
@@ -154,13 +122,7 @@ class UserEditScreen extends Screen
         ];
     }
 
-    /**
-     * @param User    $user
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function save(User $user, Request $request)
+    public function save(User $user, Request $request): RedirectResponse
     {
         $request->validate([
             'user.email' => [
@@ -187,7 +149,7 @@ class UserEditScreen extends Screen
         $user->fill($userData)
             ->fill(['permissions' => $permissions]);
 
-        /** @noinspection PhpUndefinedFieldInspection */
+        /** @noinspection PhpPossiblePolymorphicInvocationInspection */
         $user->birth_date = $userData['birth_date'];
         $user->save();
 
@@ -198,29 +160,17 @@ class UserEditScreen extends Screen
         return redirect()->route('platform.systems.users');
     }
 
-    /**
-     * @param User $user
-     *
-     * @throws \Exception
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     *
-     */
-    public function remove(User $user)
+    public function remove(User $user): RedirectResponse
     {
-        $user->delete();
-
-        Toast::info(__('User was removed'));
+        try {
+            $user->delete();
+            Toast::info(__('User was removed'));
+        } catch (Exception $e) {}
 
         return redirect()->route('platform.systems.users');
     }
 
-    /**
-     * @param User $user
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function loginAs(User $user)
+    public function loginAs(User $user): RedirectResponse
     {
         UserSwitch::loginAs($user);
 
