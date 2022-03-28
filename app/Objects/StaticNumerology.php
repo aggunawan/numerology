@@ -211,13 +211,13 @@ class StaticNumerology
     {
         $mod = ($this->date + $this->month) % 9;
         $this->categories['mindset']->addTrait($mod == 0 ? 9 : $mod);
-        $this->categories['mindset']->addTrait(
-            ($this->month + (int) substr($this->year + $this->currentYear, -2)) % 22
-        );
+        $this->categories['mindset']->addTrait((
+            $this->currentYear == 0 ?
+                ($this->date + $this->year):
+                ($this->month + (int) substr(($this->year + $this->currentYear), - 2))
+        ) % 22);
         $this->categories['mindset_pristine']->addTrait($mod == 0 ? 9 : $mod);
-        $this->categories['mindset_pristine']->addTrait(
-            ($this->month + (int) substr($this->year, -2)) % 22
-        );
+        $this->categories['mindset_pristine']->addTrait(($this->date + $this->year) % 22);
     }
 
     protected function setEducationTrait(): void

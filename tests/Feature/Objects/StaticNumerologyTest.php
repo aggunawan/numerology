@@ -49,8 +49,7 @@ class StaticNumerologyTest extends TestCase
 
         self::assertSame(
             [
-                4 => 'The Emperor',
-                9 => 'The Hermit'
+                4 => 'The Emperor'
             ],
             $this->past->getMindset()->getTraits()
         );
@@ -58,7 +57,7 @@ class StaticNumerologyTest extends TestCase
         self::assertSame(
             [
                 6 => 'The Lovers',
-                8 => 'Strength'
+                16 => 'The Tower'
             ],
             $this->future->getMindset()->getTraits()
         );
@@ -117,16 +116,16 @@ class StaticNumerologyTest extends TestCase
         self::assertSame(
             [
                 12 => 'The Hanged Man',
-                8 => 'Strength',
-                15 => 'The Devil',
+                20 => 'Judgement',
+                10 => 'Wheel of Fortune',
             ],
             $this->past->getSpiritual()->getTraits()
         );
         self::assertSame(
             [
                 18 => 'The Moon',
-                0 => 'The Fool',
                 16 => 'The Tower',
+                2 => 'The High Priestess',
             ],
             $this->future->getSpiritual()->getTraits()
         );
@@ -165,7 +164,6 @@ class StaticNumerologyTest extends TestCase
         self::assertSame(
             [
                 6 => 'The Lovers',
-                4 => 'The Emperor',
                 21 => 'The World',
             ],
             $this->past->getBelief()->getTraits()
@@ -173,7 +171,7 @@ class StaticNumerologyTest extends TestCase
         self::assertSame(
             [
                 9 => 'The Hermit',
-                0 => 'The Fool',
+                8 => 'Strength',
                 20 => 'Judgement',
             ],
             $this->future->getBelief()->getTraits()
@@ -213,7 +211,7 @@ class StaticNumerologyTest extends TestCase
         self::assertSame(
             [
                 13 => 'Death',
-                6 => 'The Lovers',
+                1 => 'The Magician',
                 15 => 'The Devil',
             ],
             $this->past->getPhysical()->getTraits()
@@ -221,7 +219,7 @@ class StaticNumerologyTest extends TestCase
         self::assertSame(
             [
                 12 => 'The Hanged Man',
-                6 => 'The Lovers',
+                14 => 'Temperance',
                 20 => 'Judgement',
             ],
             $this->future->getPhysical()->getTraits()
@@ -237,14 +235,14 @@ class StaticNumerologyTest extends TestCase
         self::assertSame(
             [
                 8 => 'Strength',
-                12 => 'The Hanged Man',
+                19 => 'The Sun',
             ],
             $this->past->getPartner()->getTraits()
         );
         self::assertSame(
             [
                 12 => 'The Hanged Man',
-                0 => 'The Fool',
+                2 => 'The High Priestess',
             ],
             $this->future->getPartner()->getTraits()
         );
@@ -281,14 +279,14 @@ class StaticNumerologyTest extends TestCase
         self::assertSame(
             [
                 18 => 'The Moon',
-                3 => 'The Empress',
+                0 => 'The Fool',
             ],
             $this->past->getEmotional()->getTraits()
         );
         self::assertSame(
             [
                 5 => 'The Hierophant',
-                8 => 'Strength',
+                4 => 'The Emperor',
             ],
             $this->future->getEmotional()->getTraits()
         );
@@ -325,16 +323,16 @@ class StaticNumerologyTest extends TestCase
         self::assertSame(
             [
                 10 => 'Wheel of Fortune',
-                13 => 'Death',
-                14 => 'Temperance',
+                3 => 'The Empress',
+                9 => 'The Hermit',
             ],
             $this->past->getTalent()->getTraits()
         );
         self::assertSame(
             [
                 15 => 'The Devil',
-                8 => 'Strength',
-                14 => 'Temperance',
+                2 => 'The High Priestess',
+                0 => 'The Fool',
             ],
             $this->future->getTalent()->getTraits()
         );
@@ -373,16 +371,16 @@ class StaticNumerologyTest extends TestCase
         self::assertSame(
             [
                 14 => 'Temperance',
-                1 => 'The Magician',
-                21 => 'The World',
+                17 => 'The Star',
+                18 => 'The Moon',
             ],
             $this->past->getRelationship()->getTraits()
         );
         self::assertSame(
             [
                 10 => 'Wheel of Fortune',
-                8 => 'Strength',
-                18 => 'The Moon',
+                0 => 'The Fool',
+                14 => 'Temperance',
             ],
             $this->future->getRelationship()->getTraits()
         );
@@ -422,7 +420,7 @@ class StaticNumerologyTest extends TestCase
         self::assertSame(
             [
                 20 => 'Judgement',
-                21 => 'The World',
+                16 => 'The Tower',
                 17 => 'The Star',
             ],
             $this->past->getSon()->getTraits()
@@ -430,7 +428,7 @@ class StaticNumerologyTest extends TestCase
         self::assertSame(
             [
                 15 => 'The Devil',
-                18 => 'The Moon',
+                4 => 'The Emperor',
                 2 => 'The High Priestess',
             ],
             $this->future->getSon()->getTraits()
@@ -446,8 +444,8 @@ class StaticNumerologyTest extends TestCase
         self::assertSame(
             [
                 19 => 'The Sun',
-                10 => 'Wheel of Fortune',
-                14 => 'Temperance',
+                0 => 'The Fool',
+                21 => 'The World',
             ],
             $this->past->getDaughter()->getTraits()
         );
@@ -455,8 +453,8 @@ class StaticNumerologyTest extends TestCase
         self::assertSame(
             [
                 21 => 'The World',
-                6 => 'The Lovers',
-                6 => 'The Lovers',
+                0 => 'The Fool',
+                8 => 'Strength',
             ],
             $this->future->getDaughter()->getTraits()
         );
@@ -470,17 +468,17 @@ class StaticNumerologyTest extends TestCase
 
         self::assertSame(
             [
-                11 => 'Justice',
+                12 => 'The Hanged Man',
+                8 => 'Strength',
                 10 => 'Wheel of Fortune',
-                6 => 'The Lovers',
             ],
             $this->past->getGoal()->getTraits()
         );
         self::assertSame(
             [
-                8 => 'Strength',
-                4 => 'The Emperor',
-                19 => 'The Sun',
+                2 => 'The High Priestess',
+                16 => 'The Tower',
+                17 => 'The Star',
             ],
             $this->future->getGoal()->getTraits()
         );
@@ -495,9 +493,8 @@ class StaticNumerologyTest extends TestCase
         self::assertSame(
             [
                 12 => 'The Hanged Man',
-                0 => 'The Fool',
-                2 => 'The High Priestess',
                 11 => 'Justice',
+                15 => 'The Devil',
             ],
             $this->past->getCharacter()->getTraits()
         );
@@ -505,8 +502,7 @@ class StaticNumerologyTest extends TestCase
             [
                 3 => 'The Empress',
                 4 => 'The Emperor',
-                20 => 'Judgement',
-                6 => 'The Lovers',
+                10 => 'Wheel of Fortune',
             ],
             $this->future->getCharacter()->getTraits()
         );
@@ -522,9 +518,8 @@ class StaticNumerologyTest extends TestCase
         self::assertSame(
             [
                 17 => 'The Star',
-                4 => 'The Emperor',
-                2 => 'The High Priestess',
-                17 => 'The Star',
+                16 => 'The Tower',
+                9 => 'The Hermit',
             ],
             $this->past->getHealth()->getTraits()
         );
@@ -532,9 +527,8 @@ class StaticNumerologyTest extends TestCase
         self::assertSame(
             [
                 13 => 'Death',
-                10 => 'Wheel of Fortune',
-                9 => 'The Hermit',
-                13 => 'Death',
+                4 => 'The Emperor',
+                11 => 'Justice',
             ],
             $this->future->getHealth()->getTraits()
         );
