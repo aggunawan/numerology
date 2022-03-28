@@ -4,6 +4,7 @@ namespace App\Orchid\Resources;
 
 use App\Events\SharedPersonExcelImported;
 use App\Models\SharedPerson;
+use App\Orchid\Actions\BulkDeletePersonAction;
 use App\Orchid\Filters\NameFilter;
 use App\Traits\HasPersonInput;
 use Illuminate\Database\Eloquent\Builder;
@@ -24,6 +25,13 @@ class SharedPersonResource extends Resource
     public function paginationQuery(ResourceRequest $request, Model $model): Builder
     {
         return $model->newQuery()->orderBy('name');
+    }
+
+    public function actions(): array
+    {
+        return [
+            BulkDeletePersonAction::class
+        ];
     }
 
     public function rules(Model $model): array

@@ -4,6 +4,7 @@ namespace App\Orchid\Resources;
 
 use App\Events\PersonExcelImported;
 use App\Models\Person;
+use App\Orchid\Actions\BulkDeletePersonAction;
 use App\Orchid\Filters\NameFilter;
 use App\Traits\HasPersonInput;
 use Illuminate\Database\Eloquent\Builder;
@@ -25,6 +26,13 @@ class PersonResource extends Resource
     {
         return [
             NameFilter::class,
+        ];
+    }
+
+    public function actions(): array
+    {
+        return [
+            BulkDeletePersonAction::class
         ];
     }
 
