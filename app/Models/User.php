@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Orchid\Platform\Models\User as Authenticatable;
 
 /**
@@ -12,6 +13,7 @@ use Orchid\Platform\Models\User as Authenticatable;
  * @property string $birth_date
  * @property Carbon $valid_date
  * @property Carbon $expired_date
+ * @property Credit $credit
  */
 class User extends Authenticatable
 {
@@ -67,5 +69,10 @@ class User extends Authenticatable
     public function people(): HasMany
     {
         return $this->hasMany(Person::class);
+    }
+
+    public function credit(): HasOne
+    {
+        return $this->hasOne(Credit::class)->withDefault(new Credit(['point' => 0, 'user_id' => $this->id]));
     }
 }
