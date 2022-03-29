@@ -138,10 +138,10 @@ class DashboardController extends Controller
 
     private function getBirthDateList()
     {
-        return (new BirthDateList())
-            ->newQuery()
-            ->where('user_id', auth()->user()->getAuthIdentifier())
-            ->first();
+        $user = auth()->user();
+
+        return ($user instanceof User) ?
+            $user->birthDayLists()->where('is_active', true)->first() : null;
     }
 
     private function getHighlightedYear(StaticNumerology $numerology): int

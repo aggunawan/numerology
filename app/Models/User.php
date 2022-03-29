@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Orchid\Platform\Models\User as Authenticatable;
 
 /**
@@ -56,4 +57,9 @@ class User extends Authenticatable
         'updated_at',
         'created_at',
     ];
+
+    public function birthDayLists(): HasMany
+    {
+        return $this->hasMany(BirthDateList::class);
+    }
 }

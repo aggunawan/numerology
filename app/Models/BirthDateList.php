@@ -19,7 +19,8 @@ class BirthDateList extends Model
     ];
 
     protected $casts = [
-        'content' => 'array'
+        'content' => 'array',
+        'is_active' => 'bool    ',
     ];
 
     public function user(): BelongsTo
