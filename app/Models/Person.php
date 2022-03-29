@@ -12,6 +12,7 @@ use Orchid\Screen\AsSource;
 /**
  * @property string $name
  * @property Carbon $birth_date
+ * @property int    $user_id
  */
 class Person extends Model
 {

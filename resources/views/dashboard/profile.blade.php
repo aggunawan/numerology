@@ -7,7 +7,7 @@
         <x-slot name="content">
             @if(auth()->user()->hasAccess('platform.index'))
                 <x-dropdown-link :href="route('platform.main')">
-                    {{ __('Admin Panel') }}
+                    {{ __('Panel') }}
                 </x-dropdown-link>
             @endif
 

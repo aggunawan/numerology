@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Person;
+use App\Observers\PersonObserver;
 use Illuminate\Support\ServiceProvider;
 use Orchid\Platform\Dashboard;
 use Orchid\Platform\ItemPermission;
@@ -31,5 +33,7 @@ class AppServiceProvider extends ServiceProvider
             ->addPermission('shared_people', 'Shared People');
 
         $dashboard->registerPermissions($permissions);
+
+        Person::observe(PersonObserver::class);
     }
 }

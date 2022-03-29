@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Orchid\Platform\Models\User as Authenticatable;
 
 /**
+ * @property int    $id
  * @property string $name
  * @property string $birth_date
  * @property Carbon $valid_date
@@ -61,5 +62,10 @@ class User extends Authenticatable
     public function birthDayLists(): HasMany
     {
         return $this->hasMany(BirthDateList::class);
+    }
+
+    public function people(): HasMany
+    {
+        return $this->hasMany(Person::class);
     }
 }
