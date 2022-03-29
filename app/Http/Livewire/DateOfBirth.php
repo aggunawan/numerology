@@ -13,7 +13,7 @@ use Livewire\Component;
 class DateOfBirth extends Component
 {
     public $people;
-    public $personName = null;
+    public $personName = 'Today';
     public $selectedPerson = null;
     public $selectedDate = 1;
     public $selectedMonth = 'January';
@@ -94,7 +94,7 @@ class DateOfBirth extends Component
     {
         if ($this->getValidProperty()) {
             $this->updateList($this->personName, "$this->selectedDate $this->selectedMonth $this->selectedYear");
-            $this->personName = null;
+            $this->personName = 'Today';
         }
     }
 
