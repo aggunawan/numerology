@@ -143,10 +143,7 @@ class DateOfBirth extends Component
 
     protected function getMaxDateOfBirth(): int
     {
-        $roles = $this->getRoles();
-        if ($roles->contains(User::TRAINER)) return 5;
-        if ($roles->contains(User::PRACTITIONER)) return 3;
-        return 1;
+        return 5;
     }
 
     public function getHasListProperty(): bool
