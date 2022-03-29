@@ -122,6 +122,6 @@ class StaticNumerologyYearTest extends TestCase
 
     public function testGetGoal()
     {
-        self::assertSame([19, 16, 19], $this->numerology->getGoal()->getTraitCodes());
+        self::assertSame([19, 16, 1], $this->numerology->getGoal()->getTraitCodes());
     }
 }
