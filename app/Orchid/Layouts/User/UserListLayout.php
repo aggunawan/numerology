@@ -48,6 +48,12 @@ class UserListLayout extends Table
                     return $user->updated_at->toDateTimeString();
                 }),
 
+            TD::make('point', __('Point'))
+                ->sort()
+                ->render(function (User $user) {
+                    return $user->credit->point ?? 0;
+                }),
+
             TD::make('valid_at', __('Valid Date'))
                 ->sort()
                 ->render(function (User $user) {

@@ -1,7 +1,9 @@
 <?php
 namespace App\Orchid\Screens\User;
 
+use App\Models\User;
 use App\Orchid\Layouts\Role\RolePermissionLayout;
+use App\Orchid\Layouts\User\UserCreditLayout;
 use App\Orchid\Layouts\User\UserEditLayout;
 use App\Orchid\Layouts\User\UserPasswordLayout;
 use App\Orchid\Layouts\User\UserRoleLayout;
@@ -11,7 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Orchid\Access\UserSwitch;
-use Orchid\Platform\Models\User;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 use Orchid\Support\Color;
@@ -20,11 +21,11 @@ use Orchid\Support\Facades\Toast;
 
 class UserEditScreen extends Screen
 {
-    public $user;
+    public ?User $user;
 
     public function query(User $user): iterable
     {
-        $user->load(['roles']);
+        $user->load(['roles', 'credit']);
 
         return [
             'user'       => $user,
@@ -51,7 +52,6 @@ class UserEditScreen extends Screen
 
     public function commandBar(): iterable
     {
-        /** @noinspection PhpUndefinedFieldInspection */
         return [
             Button::make(__('Impersonate user'))
                 ->icon('login')
@@ -108,6 +108,17 @@ class UserEditScreen extends Screen
                         ->method('save')
                 ),
 
+            Layout::block(UserCreditLayout::class)
+                ->title(__('Credit'))
+                ->description(__('A User Credit.'))
+                ->commands(
+                    Button::make(__('Save'))
+                        ->type(Color::DEFAULT())
+                        ->icon('check')
+                        ->canSee($this->user->exists)
+                        ->method('save')
+                ),
+
             Layout::block(RolePermissionLayout::class)
                 ->title(__('Permissions'))
                 ->description(__('Allow the user to perform some actions that are not provided for by his roles'))
@@ -149,19 +160,30 @@ class UserEditScreen extends Screen
         $user->fill($userData)
             ->fill(['permissions' => $permissions]);
 
-        /** @noinspection PhpPossiblePolymorphicInvocationInspection */
         $user->birth_date = $userData['birth_date'];
-        /** @noinspection PhpPossiblePolymorphicInvocationInspection */
         $user->valid_date = $userData['expiration_date']['start'];
-        /** @noinspection PhpPossiblePolymorphicInvocationInspection */
         $user->expired_date = $userData['expiration_date']['end'];
         $user->save();
 
         $user->replaceRoles($request->input('user.roles'));
 
+        if (collect($request->get('user'))->get('credit', false)) {
+            $this->updateCredit($user, $request->get('user')['credit']['point']);
+        }
+
         Toast::info(__('User was saved.'));
 
         return redirect()->route('platform.systems.users');
+    }
+
+    public function updateCredit(User $user, int $credit)
+    {
+        $user = (new User())->newQuery()->find($user->id);
+
+        if ($user instanceof User) {
+            $user->credit->point = $credit;
+            $user->credit->save();
+        }
     }
 
     public function remove(User $user): RedirectResponse

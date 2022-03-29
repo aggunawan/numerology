@@ -1,12 +1,13 @@
 <?php
 namespace App\Orchid\Screens\User;
 
+use App\Models\User;
 use App\Orchid\Layouts\User\UserEditLayout;
 use App\Orchid\Layouts\User\UserFiltersLayout;
 use App\Orchid\Layouts\User\UserListLayout;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Orchid\Platform\Models\User;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
@@ -18,7 +19,7 @@ class UserListScreen extends Screen
     {
         /** @noinspection PhpUndefinedMethodInspection */
         return [
-            'users' => User::with('roles')
+            'users' => User::with(['roles', 'credit'])
                 ->filters()
                 ->filtersApplySelection(UserFiltersLayout::class)
                 ->defaultSort('id', 'desc')
@@ -85,10 +86,18 @@ class UserListScreen extends Screen
         Toast::info(__('User was saved.'));
     }
 
-    /** @noinspection PhpUndefinedMethodInspection */
+    /**
+     * @throws Exception
+     */
     public function remove(Request $request): void
     {
-        User::findOrFail($request->get('id'))->delete();
+        $user = (new User())->newQuery()->findOrFail($request->get('id'));
+
+        if ($user instanceof User) {
+            $user->people()->delete();
+            $user->credit()->delete();
+            $user->delete();
+        }
 
         Toast::info(__('User was removed'));
     }
