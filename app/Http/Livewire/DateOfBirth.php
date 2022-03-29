@@ -170,21 +170,29 @@ class DateOfBirth extends Component
 
     public function recalculate(BirthDateListRepository $birthDateListRepository): Redirector
     {
-        /** @noinspection PhpParamsInspection */
-        $activeList = $birthDateListRepository->findActiveBirthDateList(auth()->user());
-        /** @noinspection PhpParamsInspection */
-        $inactiveList = $birthDateListRepository->findInactiveBirthDateList(auth()->user());
+        $user = auth()->user();
 
-        if ($inactiveList instanceof BirthDateList) {
-            if (is_null($activeList)) {
-                $this->createActiveList($inactiveList);
-            } elseif ($activeList instanceof BirthDateList) {
-                $activeList->update(['content' => $inactiveList->content]);
+        if ($user instanceof User) {
+            if ($user->credit->point > 0) {
+                $activeList = $birthDateListRepository->findActiveBirthDateList($user);
+                $inactiveList = $birthDateListRepository->findInactiveBirthDateList($user);
+
+                if ($inactiveList instanceof BirthDateList) {
+                    if (is_null($activeList)) {
+                        $this->createActiveList($inactiveList);
+                    } elseif ($activeList instanceof BirthDateList) {
+                        $activeList->update(['content' => $inactiveList->content]);
+                    }
+                }
+
+                $user->credit()->decrement('point');
+
+                /** @noinspection PhpIncompatibleReturnTypeInspection */
+                return redirect()->route('dashboard.index');
             }
         }
 
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return redirect()->route('dashboard.index');
+        return abort(403);
     }
 
     private function createActiveList(BirthDateList $inactiveList): void
@@ -195,5 +203,12 @@ class DateOfBirth extends Component
         ]);
         $activeList->is_active = true;
         $activeList->save();
+    }
+
+    public function getRecalculateableProperty(): bool
+    {
+        $user = auth()->user();
+
+        return $user instanceof User && ($user->credit->point ?? 0) > 0;
     }
 }

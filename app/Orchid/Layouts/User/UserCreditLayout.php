@@ -11,6 +11,8 @@ class UserCreditLayout extends Rows
     {
         return [
             Input::make('user.credit.point')
+                ->required()
+                ->value(0)
                 ->title('Credit')
                 ->type('number'),
         ];
