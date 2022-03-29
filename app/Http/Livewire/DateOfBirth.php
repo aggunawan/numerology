@@ -6,18 +6,20 @@ use App\Models\BirthDateList;
 use App\Models\Person;
 use App\Models\SharedPerson;
 use App\Models\User;
+use App\Repositories\BirthDateListRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Livewire\Component;
+use Livewire\Redirector;
 
 class DateOfBirth extends Component
 {
-    public $people;
-    public $personName = 'Today';
-    public $selectedPerson = null;
-    public $selectedDate = 1;
-    public $selectedMonth = 'January';
-    public $selectedYear = null;
+    public ?array $people;
+    public string $personName = 'Today';
+    public ?string $selectedPerson = null;
+    public int $selectedDate = 1;
+    public string $selectedMonth = 'January';
+    public ?string $selectedYear = null;
 
     protected $listeners = ['selectedPersonUpdated' => 'updateSelectedPerson'];
 
@@ -28,7 +30,7 @@ class DateOfBirth extends Component
         $this->selectedDate = date('d');
     }
 
-    public $months = [
+    public array $months = [
         'Jan',
         'Feb',
         'Mar',
@@ -43,7 +45,7 @@ class DateOfBirth extends Component
         'Dec',
     ];
 
-    protected $rules = [
+    protected array $rules = [
         "selectedPerson" => "required",
     ];
 
@@ -72,9 +74,10 @@ class DateOfBirth extends Component
         return null;
     }
 
-    public function getListProperty()
+    public function getListProperty(BirthDateListRepository $birthDateListRepository)
     {
-        return (new BirthDateList())->newQuery()->where('user_id', auth()->user()->getAuthIdentifier())->first();
+        /** @noinspection PhpParamsInspection */
+        return $birthDateListRepository->findInactiveBirthDateList(auth()->user());
     }
 
     public function getDateProperty(): array
@@ -82,6 +85,7 @@ class DateOfBirth extends Component
         return range(1, Carbon::parse($this->selectedMonth)->endOfMonth()->format('d'));
     }
 
+    /** @noinspection PhpConditionAlreadyCheckedInspection */
     public function getValidProperty(): bool
     {
         return !is_null($this->selectedDate) &&
@@ -90,17 +94,21 @@ class DateOfBirth extends Component
             !is_null($this->personName);
     }
 
-    public function storeList()
+    public function storeList(BirthDateListRepository $birthDateListRepository)
     {
         if ($this->getValidProperty()) {
-            $this->updateList($this->personName, "$this->selectedDate $this->selectedMonth $this->selectedYear");
+            $this->updateList(
+                $this->personName,
+                "$this->selectedDate $this->selectedMonth $this->selectedYear",
+                $birthDateListRepository
+            );
             $this->personName = 'Today';
         }
     }
 
-    public function removeList(int $index)
+    public function removeList(int $index, BirthDateListRepository $birthDateListRepository)
     {
-        $list = $this->getListProperty();
+        $list = $this->getListProperty($birthDateListRepository);
 
         if ($list instanceof BirthDateList) {
             $content = collect($list->content);
@@ -110,23 +118,24 @@ class DateOfBirth extends Component
         }
     }
 
-    public function addFromList()
+    /** @noinspection PhpUnused */
+    public function addFromList(BirthDateListRepository $birthDateListRepository)
     {
         $person = $this->getPersonProperty();
 
         if ($person instanceof Person || $person instanceof SharedPerson) {
-            $this->updateList($person->name, $person->birth_date->toDateString());
+            $this->updateList($person->name, $person->birth_date->toDateString(), $birthDateListRepository);
             $this->emit('clearSelectedPerson');
         }
     }
 
-    private function updateList(string $name, string $date)
+    private function updateList(string $name, string $date, BirthDateListRepository $birthDateListRepository)
     {
         $id = auth()->user()->getAuthIdentifier();
-        $list = (new BirthDateList())->newQuery()->firstOrCreate(
-            ['user_id' => $id],
-            ['content' => [], 'user_id' => $id]
-        );
+
+        /** @noinspection PhpParamsInspection */
+        $list = $birthDateListRepository->findInactiveBirthDateList(auth()->user());
+        if (is_null($list)) $list = new BirthDateList(['content' => [], 'user_id' => $id]);
 
         if ($list instanceof BirthDateList) {
             $content = collect($list->content);
@@ -146,6 +155,7 @@ class DateOfBirth extends Component
         return 5;
     }
 
+    /** @noinspection PhpUnused */
     public function getHasListProperty(): bool
     {
         $roles = $this->getRoles();
@@ -156,5 +166,34 @@ class DateOfBirth extends Component
     {
         /** @noinspection PhpPossiblePolymorphicInvocationInspection */
         return auth()->user()->roles()->pluck('slug');
+    }
+
+    public function recalculate(BirthDateListRepository $birthDateListRepository): Redirector
+    {
+        /** @noinspection PhpParamsInspection */
+        $activeList = $birthDateListRepository->findActiveBirthDateList(auth()->user());
+        /** @noinspection PhpParamsInspection */
+        $inactiveList = $birthDateListRepository->findInactiveBirthDateList(auth()->user());
+
+        if ($inactiveList instanceof BirthDateList) {
+            if (is_null($activeList)) {
+                $this->createActiveList($inactiveList);
+            } elseif ($activeList instanceof BirthDateList) {
+                $activeList->update(['content' => $inactiveList->content]);
+            }
+        }
+
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return redirect()->route('dashboard.index');
+    }
+
+    private function createActiveList(BirthDateList $inactiveList): void
+    {
+        $activeList = new BirthDateList([
+            'content' => $inactiveList->content,
+            'user_id' => auth()->user()->getAuthIdentifier()
+        ]);
+        $activeList->is_active = true;
+        $activeList->save();
     }
 }

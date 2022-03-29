@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property array $content
+ * @property boolean $is_active
  */
 class BirthDateList extends Model
 {
@@ -20,7 +21,7 @@ class BirthDateList extends Model
 
     protected $casts = [
         'content' => 'array',
-        'is_active' => 'bool    ',
+        'is_active' => 'boolean',
     ];
 
     public function user(): BelongsTo

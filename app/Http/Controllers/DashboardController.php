@@ -9,12 +9,20 @@ use App\Models\User;
 use App\Objects\BirthDate;
 use App\Objects\Person as PersonObject;
 use App\Objects\StaticNumerology;
+use App\Repositories\BirthDateListRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
+    private BirthDateListRepository $birthDateListRepository;
+
+    public function __construct(BirthDateListRepository $birthDateListRepository)
+    {
+        $this->birthDateListRepository = $birthDateListRepository;
+    }
+
     public function index(Request $request)
     {
         $person = $this->getBirthDate();
@@ -138,10 +146,8 @@ class DashboardController extends Controller
 
     private function getBirthDateList()
     {
-        $user = auth()->user();
-
-        return ($user instanceof User) ?
-            $user->birthDayLists()->where('is_active', true)->first() : null;
+        /** @noinspection PhpParamsInspection */
+        return $this->birthDateListRepository->findActiveBirthDateList(auth()->user());
     }
 
     private function getHighlightedYear(StaticNumerology $numerology): int
