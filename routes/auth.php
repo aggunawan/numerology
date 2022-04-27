@@ -8,7 +8,7 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
-Route::resource('/dashboard', DashboardController::class)->only(['index']);
+Route::resource('/dashboard', DashboardController::class)->only(['index'])->middleware('auth');
 
 Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
 

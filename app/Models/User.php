@@ -75,4 +75,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Credit::class)->withDefault(new Credit(['point' => 0, 'user_id' => $this->id]));
     }
+
+    public function userrole(){
+        return $this->hasMany(RolesUser::class, 'user_id', 'id');
+    }
 }
