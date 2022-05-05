@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Laravel\Sanctum\HasApiTokens;
 use Orchid\Platform\Models\User as Authenticatable;
 
 /**
@@ -22,6 +23,8 @@ class User extends Authenticatable
     public const CLIENT = 'client';
     public const PRACTITIONER = 'practitioner';
     public const TRAINER = 'trainer';
+
+    use HasApiTokens;
 
     protected $fillable = [
         'name',

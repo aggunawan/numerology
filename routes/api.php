@@ -12,9 +12,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // get user token
 Route::get('/getToken', [AskAuthController::class, 'encryptToken']);
 Route::get('/getDcryptToken/{token}', [AskAuthController::class, 'dcryptToken']);
+Route::post('login', [AskAuthController::class, 'login']);
+Route::post('logout', [AskAuthController::class, 'logout'])->middleware('auth:sanctum');
 
 // Data Category Coahing API
 Route::get('/category-coaching', [AskApiDataContoller::class, 'getDataCategoriesCoaching']);
 
 // Data Coach Room API
 Route::post('/coach-room', [AskApiDataContoller::class, 'createRoom']);
+Route::get('/code-room/{room_code}', [AskApiDataContoller::class, 'getCodeRoom']);

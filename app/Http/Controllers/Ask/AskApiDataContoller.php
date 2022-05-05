@@ -25,4 +25,19 @@ class AskApiDataContoller extends Controller
             'messages' => "Data created successfully!"
         ]);
     }
+
+    public function getCodeRoom($room_code){
+        $data = CoachingRoom::where('room_code', $room_code)->first();
+        if($data){
+            return response()->json([
+                'success' => true,
+                'data' => $data
+            ]);
+        } else{
+            return response()->json([
+                'success' => false,
+                'messages' => "room tidak ditemukan atau kode sudah kadaluarsa!"
+            ]);
+        }
+    }
 }
