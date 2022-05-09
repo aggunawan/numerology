@@ -17,14 +17,16 @@ class UserTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'name' => 'root',
-                'email' => 'root@doxadigital.com',
-                'password' => Hash::make('admin1234')
+                'name' => 'user',
+                'email' => 'user@doxadigital.com',
+                'password' => Hash::make('user1234'),
+                'role_coaching' => 'user',
             ],
             [
-                'name' => 'superuser',
-                'email' => 'superuser@doxadigital.com',
-                'password' => Hash::make('super1234')
+                'name' => 'coach',
+                'email' => 'coach@doxadigital.com',
+                'password' => Hash::make('coach1234'),
+                'role_coaching' => 'coach',
             ]
         ]);
     }

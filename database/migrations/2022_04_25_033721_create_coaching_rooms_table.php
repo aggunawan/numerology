@@ -15,8 +15,10 @@ class CreateCoachingRoomsTable extends Migration
     {
         Schema::create('coaching_rooms', function (Blueprint $table) {
             $table->id();
+            $table->string('session_name');
             $table->string('coaching_name');
             $table->string('coaching_date');
+            $table->string('coaching_role');
             $table->string('room_code');
             $table->timestamps();
         });

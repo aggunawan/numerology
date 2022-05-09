@@ -21,3 +21,9 @@ Route::get('/category-coaching', [AskApiDataContoller::class, 'getDataCategories
 // Data Coach Room API
 Route::post('/coach-room', [AskApiDataContoller::class, 'createRoom']);
 Route::get('/code-room/{room_code}', [AskApiDataContoller::class, 'getCodeRoom']);
+
+// Data Number Card API
+Route::get('/number-card', [AskApiDataContoller::class, 'getDataNumberCard']);
+
+// Data Coaching Select API
+Route::get('/coaching-select', [AskApiDataContoller::class, 'getDataCoachingSelect']);

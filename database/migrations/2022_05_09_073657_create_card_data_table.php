@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAssignRolesP1ntusTable extends Migration
+class CreateCardDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateAssignRolesP1ntusTable extends Migration
      */
     public function up()
     {
-        Schema::create('assign_roles_p1ntus', function (Blueprint $table) {
+        Schema::create('card_data', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned();
+            $table->text('images')->nullable();
+            $table->text('title');
+            $table->text('question');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -29,6 +29,6 @@ class CreateAssignRolesP1ntusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assign_roles_p1ntus');
+        Schema::dropIfExists('card_data');
     }
 }

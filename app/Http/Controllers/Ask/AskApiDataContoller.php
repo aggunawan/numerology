@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Ask;
 
 use App\Http\Controllers\Controller;
 use App\Models\CoachingCategory;
+use App\Models\CoachingNumber;
 use App\Models\CoachingRoom;
+use App\Models\CoachingSelect;
 use Illuminate\Http\Request;
 
 class AskApiDataContoller extends Controller
@@ -37,6 +39,36 @@ class AskApiDataContoller extends Controller
             return response()->json([
                 'success' => false,
                 'messages' => "room tidak ditemukan atau kode sudah kadaluarsa!"
+            ]);
+        }
+    }
+
+    public function getDataNumberCard(){
+        $data = CoachingNumber::all();
+        if($data){
+            return response()->json([
+                'success' => true,
+                'data' => $data
+            ]);
+        } else{
+            return response()->json([
+                'success' => false,
+                'messages' => "data tidak ditemukan!"
+            ]);
+        }
+    }
+
+    public function getDataCoachingSelect(){
+        $data = CoachingSelect::all();
+        if($data){
+            return response()->json([
+                'success' => true,
+                'data' => $data
+            ]);
+        } else{
+            return response()->json([
+                'success' => false,
+                'messages' => "data tidak ditemukan!"
             ]);
         }
     }
